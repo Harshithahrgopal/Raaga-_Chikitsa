@@ -1,0 +1,146 @@
+import 'package:flutter/material.dart';
+import 'dart:math' as math;
+
+void main() {
+  runApp(RaagaChikitsaApp());
+}
+
+class RaagaChikitsaApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Raaga Chikitsa',
+      debugShowCheckedModeBanner: false,
+      home: RaagaChikitsaHomePage(),
+    );
+  }
+}
+
+class RaagaChikitsaHomePage extends StatefulWidget {
+  @override
+  _RaagaChikitsaHomePageState createState() => _RaagaChikitsaHomePageState();
+}
+
+class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+    AnimationController(vsync: this, duration: Duration(seconds: 20))
+      ..repeat(); // Makes the image spin infinitely
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Clean up animation when widget is disposed
+    super.dispose();
+  }
+
+  // Custom Widget to draw outlined + filled text
+  Widget buildOutlinedText(String text) {
+    return Stack(
+      children: [
+        // Outline
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 3
+              ..color = Color(0xFFFFBC97), // Outline color from Figma
+          ),
+        ),
+        // Fill
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF5C0202), // Fill color from Figma
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        // Gradient background matching Figma
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFFFF1DB), Color(0xFFFFBC97)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 40), // top space
+              Center(child: buildOutlinedText('Raaga Chikitsa')),
+
+              const SizedBox(height: 30),
+
+              // Rotating image (chakra)
+              Expanded(
+                child: Center(
+                  child: RotationTransition(
+                    turns: _controller,
+                    child: Image.asset(
+                      'assets/main_logo.png',
+                      width: 320,
+                      height: 320,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              // Get Started button
+              ElevatedButton(
+                onPressed: () {
+                  // Define your navigation here
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFCC8866), // Button color
+                  foregroundColor: Colors.white,      // Text color
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 4,
+                ),
+                child: const Text(
+                  'Get Started',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Text(
+                  'Your journey to peace begins with a raga',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
