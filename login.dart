@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'signup.dart'; // Import the SignUpPage
+import 'home.dart';
+import 'signup.dart';// Import the HomePage
 
 class LoginPage extends StatefulWidget {
   @override
@@ -153,7 +154,12 @@ class _LoginPageState extends State<LoginPage> {
                       Center(
                         child: ElevatedButton(
                           onPressed: () {
-                            //  Handle Login
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      HomePage()), // Navigate to HomePage
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
@@ -215,4 +221,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
