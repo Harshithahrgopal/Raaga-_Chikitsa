@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'login.dart'; // Import the LoginPage
+import 'dart:math' as math; // Import math for rotation
 
 void main() {
   runApp(RaagaChikitsaApp());
@@ -11,138 +12,97 @@ class RaagaChikitsaApp extends StatelessWidget {
     return MaterialApp(
       title: 'Raaga Chikitsa',
       debugShowCheckedModeBanner: false,
-      home: RaagaChikitsaHomePage(),
+      home: RaagaChikitsaHomePage(), // Start with the home page
     );
   }
 }
 
-class RaagaChikitsaHomePage extends StatefulWidget {
+class RaagaChikitsaHomePage extends StatefulWidget { // Changed to StatefulWidget
   @override
-  _RaagaChikitsaHomePageState createState() => _RaagaChikitsaHomePageState();
+  _RaagaChikitsaHomePageState createState() => _RaagaChikitsaHomePageState(); // Added State class
 }
 
-class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage> with SingleTickerProviderStateMixin { // Added TickerProvider
+  late AnimationController _controller; // Added AnimationController
 
   @override
   void initState() {
     super.initState();
-    _controller =
-    AnimationController(vsync: this, duration: Duration(seconds: 20))
-      ..repeat(); // Makes the image spin infinitely
+    _controller = AnimationController(vsync: this, duration: Duration(seconds: 20))..repeat(); // Initialize controller
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Clean up animation when widget is disposed
+    _controller.dispose(); // Dispose the controller
     super.dispose();
-  }
-
-  // Custom Widget to draw outlined + filled text
-  Widget buildOutlinedText(String text) {
-    return Stack(
-      children: [
-        // Outline
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.normal,
-            foreground: Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = 3
-              ..color = const Color(0xFFFFBC97), // Keep const here
-          ),
-        ),
-        // Fill
-        Text( // Removed const here
-          text,
-          style: const TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.normal,
-            color: Color(0xFF5C0202),
-          ),
-        ),
-      ],
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        // Gradient background matching Figma
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFFFF1DB), Color(0xFFFFBC97)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+            colors: [Color(0xFFFFF1DB), Color(0xFFFFBC97)],
           ),
         ),
         child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 40), // top space
-              Center(child: buildOutlinedText('Raaga Chikitsa')),
-
-              const SizedBox(height: 30),
-
-              // Rotating image (chakra)
-              Expanded(
-                child: Center(
-                  child: RotationTransition(
-                    turns: _controller,
-                    child: SizedBox( //Added SizedBox to limit the size.
-                      width: 390,  // set the width from the other code.
-                      height: 315, // set the height from the other code.
-                      child: Image.asset(
-                        'assets/main_logo.png',
-                        fit: BoxFit.fitWidth, // added fit
-                      ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'Raaga Chikitsa',
+                  style: TextStyle(
+                    color: Color(0xFF5C0202),
+                    fontFamily: 'Architects Daughter',
+                    fontSize: 48,
+                  ),
+                ),
+                const SizedBox(height: 30), // Reduced space
+                RotationTransition( // Added RotationTransition
+                  turns: _controller,
+                  child: SizedBox(  // Added SizedBox for size control
+                    width: 320,
+                    height: 320,
+                    child: Image.asset('assets/main_logo.png'), // Added Image
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()), // Navigate
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
+                    foregroundColor: const Color(0xFF5c0202),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
                     ),
+                    elevation: 4,
+                  ),
+                  child: const Text(
+                    'Get Started',
+                    style: TextStyle(fontSize: 28, fontFamily: 'Inter'),
                   ),
                 ),
-              ),
-
-              const SizedBox(height: 30),
-
-              // Get Started button
-              ElevatedButton(
-                onPressed: () {
-                  // Define your navigation here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59), // Button color from the other code
-                  foregroundColor: const Color(0xFF5c0202),      // Text color from the other code.
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24), // borderRadius from the other code
-                  ),
-                  elevation: 4,
-                ),
-                child: const Text(
-                  'Get Started',
-                  style: TextStyle(fontSize: 28, fontFamily: 'Inter' // added font family and size
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              const Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Your journey to peace begins with a raga',
                   style: TextStyle(
-                      fontSize: 18, // size from the other code
-                      color:  Color(0xFF691705), // color from the other code
-                      fontFamily: 'Inter'
+                    fontSize: 18,
+                    color: Color(0xFF691705),
+                    fontFamily: 'Inter',
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
