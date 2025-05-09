@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; // Import the login.dart file
+import 'login.dart'; // Import the LoginPage
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -7,136 +7,140 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity, // Use full screen width
+        height: double.infinity, // Use full screen height
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFF1DB), // Light orange
-              Color(0xFFFFBC97), // Peach
-            ],
+            colors: [Color(0xFFFFF1DB), Color(0xFFFFBC97)],
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const Text(
-                    'Create an account',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF5C0202), // Dark Brown
-                    ),
-                    textAlign: TextAlign.center,
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SingleChildScrollView(
+            // Use SingleChildScrollView for scrollable content
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 80),
+                const Text(
+                  'Create an account',
+                  style: TextStyle(
+                    color: Color(0xFF5C0202),
+                    fontFamily: 'Inter',
+                    fontSize: 30,
+                    fontWeight: FontWeight.normal,
+                    height: 1,
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Start your healing journey!',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF9B4D4D), // Darker Red
-                    ),
-                    textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Start your healing journey!',
+                  style: TextStyle(
+                    color: Color.fromRGBO(106, 24, 5, 0.79),
+                    fontFamily: 'Inter',
+                    fontSize: 19,
+                    fontWeight: FontWeight.normal,
+                    height: 1,
                   ),
-                  const SizedBox(height: 30),
-                  _buildTextField(
-                    controller: _usernameController,
-                    labelText: 'Username',
-                    hintText: 'Enter your Username',
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    controller: _emailController,
-                    labelText: 'Email',
-                    hintText: 'Enter your Email',
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    controller: _phoneController,
-                    labelText: 'Phone Number',
-                    hintText: 'Enter your Phone Number',
-                    keyboardType: TextInputType.phone,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    controller: _passwordController,
-                    labelText: 'Password',
-                    hintText: 'Enter your Password',
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    controller: _confirmPasswordController,
-                    labelText: 'Confirm Password',
-                    hintText: 'Confirm Password',
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
+                ),
+                const SizedBox(height: 30),
+                // Username Input
+                _buildInputField(
+                  hintText: 'Enter your Username',
+                  label: 'Username',
+                ),
+                const SizedBox(height: 20),
+                // Email Input
+                _buildInputField(
+                  hintText: 'Enter your Email',
+                  label: 'Email',
+                ),
+                const SizedBox(height: 20),
+                // Phone Number Input
+                _buildInputField(
+                  hintText: 'Enter your Phone Number',
+                  label: 'Phone Number',
+                ),
+                const SizedBox(height: 20),
+                // Password Input
+                _buildInputField(
+                  hintText: 'Enter your Password',
+                  label: 'Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20),
+                // Confirm Password Input
+                _buildInputField(
+                  hintText: 'Confirm Password',
+                  label: 'Confirm Password',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 40),
+                Center(
+                  child: ElevatedButton(
                     onPressed: () {
-                      // Handle sign up logic here
-                      // You can access the entered values using the controllers:
-                      // _usernameController.text, _emailController.text, etc.
-                      // Add validation logic (e.g., password matching) before proceeding.
+                      // Handle sign up
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFCC8866), //  Brown
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      backgroundColor:
+                      const Color.fromRGBO(212, 141, 102, 0.59),
+                      foregroundColor: const Color(0xFF5c0202),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 60, vertical: 15), // Adjusted padding
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(24),
                       ),
+                      elevation: 4,
                     ),
                     child: const Text(
                       'Sign Up',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 28, fontFamily: 'Inter'),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Already have an account? ',
-                        style: TextStyle(color: Color(0xFF5C0202)),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Already have an account? ',
+                      style: TextStyle(
+                        color: Color(0xFF5C0202),
+                        fontFamily: 'Inter',
+                        fontSize: 19,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  LoginPage()), // Navigate to Login
+                        );
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Color(0xFF0509D2),
+                          fontFamily: 'Inter',
+                          fontSize: 21,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -144,33 +148,53 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String labelText,
+  // Refactored Input Field Widget
+  Widget _buildInputField({
     required String hintText,
-    TextInputType keyboardType = TextInputType.text,
+    required String label,
     bool obscureText = false,
   }) {
-    return TextField(
-      controller: controller,
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      style: const TextStyle(color: Color(0xFF5C0202)), // Text color
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: const TextStyle(color: Color(0xFF9B4D4D)), // Darker Red
-        hintText: hintText,
-        hintStyle: const TextStyle(color: Color(0xFF9B4D4D)), // Darker Red
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 55,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(17),
+            color: const Color(0xFFFFF1DB),
+            border: Border.all(
+              color: const Color(0xFF6A1805),
+              width: 2,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 14.0),
+            child: TextField(
+              obscureText: obscureText,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: const TextStyle(
+                  color: Color.fromRGBO(106, 24, 5, 0.79),
+                  fontFamily: 'Inter',
+                  fontSize: 17,
+                ),
+              ),
+            ),
+          ),
         ),
-        focusedBorder: OutlineInputBorder( // Added focused border.
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFCC8866)),
+        const SizedBox(height: 12),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFF5C0202),
+            fontFamily: 'Inter',
+            fontSize: 20,
+            fontWeight: FontWeight.normal,
+            height: 1,
+          ),
         ),
-      ),
+      ],
     );
   }
 }
