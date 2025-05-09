@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
                       image: const DecorationImage(
                         image: AssetImage(
                             'assets/Rectangle25.png'), // Use the provided image
-                        fit: BoxFit.fill, // Use BoxFit.fill to match the design
+                        fit: BoxFit.fitWidth, // Use BoxFit.fill to match the design
                       ),
                     ),
                     child: Stack( // Use Stack to position the play button
@@ -187,46 +187,53 @@ class HomePage extends StatelessWidget {
             // Wellness Tools Section
             Positioned(
               top: 440,
-              left: 32,
+              left: 0,
+              right: 0,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Align text left.
+
                 children: [
                   const Text('Wellness Tools', style: textStyle20),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _buildWellnessButton(
-                        text1: 'Search Raagas ',
-                        text2: 'by Time',
-                        textStyle: textStyle16,
-                        image: 'assets/Icons8play501.png',
-                      ),
-                      _buildWellnessButton(
-                        text1: 'Melody List',
-                        text2: '',
-                        textStyle: textStyle16,
-                        image: '', // No image for this button
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildWellnessButton(
+                          text1: 'Search Raagas ',
+                          text2: 'by Time',
+                          textStyle: textStyle16,
+                            image: '',
+                        ),
+                        _buildWellnessButton(
+                          text1: 'Melody List',
+                          text2: '',
+                          textStyle: textStyle16,
+                          image: '', // No image for this button
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _buildWellnessButton(
-                        text1: 'Favorite Raaga ',
-                        text2: 'Playlist',
-                        textStyle: textStyle16,
-                        image: '', // No image
-                      ),
-                      _buildWellnessButton(
-                        text1: 'Get Raaga for',
-                        text2: 'Relief',
-                        textStyle: textStyle16,
-                        image: '', // No image
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildWellnessButton(
+                          text1: 'Favorite Raaga ',
+                          text2: 'Playlist',
+                          textStyle: textStyle16,
+                          image: '', // No image
+                        ),
+                        _buildWellnessButton(
+                          text1: 'Get Raaga for',
+                          text2: 'Relief',
+                          textStyle: textStyle16,
+                          image: '', // No image
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
