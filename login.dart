@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'signup.dart'; // Import the SignUpPage
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24), // Added padding
               child: SingleChildScrollView( // Make the content scrollable
                 child: ConstrainedBox( // Constrain the box to min height
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
@@ -65,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         child: const Padding(
-                          padding: EdgeInsets.only(left: 14.0),
+                          padding: EdgeInsets.only(left: 14.0), // Padding for input text
                           child: TextField(
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -157,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
                             foregroundColor: const Color(0xFF5c0202),
-                            padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15), // Adjusted padding
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
                             ),
@@ -185,7 +186,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Navigate to sign up
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SignUpPage()), // Navigate to sign up
+                              );
                             },
                             child: const Text(
                               'Sign Up',
