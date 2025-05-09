@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Signup.dart'; // Import the sign up page
-
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,139 +6,209 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    // Use LayoutBuilder to get the available height
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFF1DB), // Start color
-              Color(0xFFFFBC97), // End color
-            ],
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Welcome Back!',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF9B4D4D), // Darker red color
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            width: double.infinity, // Use full width
+            height: constraints.maxHeight, // Use full height
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFFFF1DB), Color(0xFFFFBC97)],
               ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Reconnect with wellness',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF9B4D4D), // Darker red color
-              ),
-            ),
-            const SizedBox(height: 40),
-            // Email field
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: const TextStyle(color: Color(0xFF9B4D4D)),
-                hintText: 'Enter your Email',
-                hintStyle: const TextStyle(color: Color(0xFF9B4D4D)),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Password field
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                labelStyle: const TextStyle(color: Color(0xFF9B4D4D)),
-                hintText: 'Enter your Password',
-                hintStyle: const TextStyle(color: Color(0xFF9B4D4D)),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            // Forgot password text
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  // Forgot password action
-                },
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Login button
-            ElevatedButton(
-              onPressed: () {
-                // Handle login action here
-                //   Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SignUpPage()),
-                // );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                const Color(0xFF9B4D4D), // Dark red button
-                foregroundColor: Colors.white,
-                padding:
-                const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Text(
-                'Login',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Sign Up text
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don’t have an account? "),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
-                    );
-                  },
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(color: Colors.blue),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SingleChildScrollView( // Make the content scrollable
+                child: ConstrainedBox( // Constrain the box to min height
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 91),
+                      const Text(
+                        'Welcome Back!',
+                        style: TextStyle(
+                          color: Color(0xFF5C0202),
+                          fontFamily: 'Inter',
+                          fontSize: 30,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Reconnect with wellness',
+                        style: TextStyle(
+                          color: Color.fromRGBO(106, 24, 5, 0.79),
+                          fontFamily: 'Inter',
+                          fontSize: 19,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 52),
+                      // Email Input
+                      Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17),
+                          color: const Color(0xFFFFF1DB),
+                          border: Border.all(
+                            color: const Color(0xFF6A1805),
+                            width: 2,
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 14.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Enter your Email',
+                              hintStyle: TextStyle(
+                                color: Color.fromRGBO(106, 24, 5, 0.79),
+                                fontFamily: 'Inter',
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'Email',
+                        style: TextStyle(
+                          color: Color(0xFF5C0202),
+                          fontFamily: 'Inter',
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      // Password Input
+                      Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17),
+                          color: const Color(0xFFFFF1DB),
+                          border: Border.all(
+                            color: const Color(0xFF6A1805),
+                            width: 2,
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 14.0),
+                          child: TextField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Enter your Password',
+                              hintStyle: TextStyle(
+                                color: Color.fromRGBO(106, 24, 5, 0.79),
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'Password',
+                        style: TextStyle(
+                          color: Color(0xFF5C0202),
+                          fontFamily: 'Inter',
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            //  Handle forgot password
+                          },
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Color(0xFF5C0202),
+                              fontFamily: 'Inter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                              height: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 47),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            //  Handle Login
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
+                            foregroundColor: const Color(0xFF5c0202),
+                            padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            elevation: 4,
+                          ),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(fontSize: 28, fontFamily: 'Inter'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Don’t have an account? ',
+                            style: TextStyle(
+                              color: Color(0xFF5C0202),
+                              fontFamily: 'Inter',
+                              fontSize: 19,
+                              fontWeight: FontWeight.normal,
+                              height: 1,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Navigate to sign up
+                            },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                color: Color(0xFF0509D2),
+                                fontFamily: 'Inter',
+                                fontSize: 21,
+                                fontWeight: FontWeight.normal,
+                                height: 1,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
+
