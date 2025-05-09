@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart'; // Import the LoginPage
+import 'home.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -85,7 +86,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle sign up
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HomePage()), // Navigate to HomePage
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
