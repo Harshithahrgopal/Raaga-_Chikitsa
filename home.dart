@@ -9,8 +9,8 @@ class HomePage extends StatelessWidget {
     const Color brownColor = Color(0xFF5C0202);
     const Color lightBrownColor = Color(0xFF6A1805);
     const List<Color> orangeGradientColors = [
+      Color(0xFFFFBC97),
       Color(0xFFFFF1DB),
-      Color(0xFFFFBC97)
     ];
     const TextStyle textStyle12 = TextStyle(
       color: brownColor,
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
       height: 1,
     );
     const TextStyle textStyle19 = TextStyle(
-      color: Color(0xFF691705), // Changed from RGBA
+      color: Color(0xFF691705),
       fontSize: 19,
       fontWeight: FontWeight.normal,
       height: 1,
@@ -58,8 +58,8 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        width: screenSize.width, // Use screen width
-        height: screenSize.height, // Use screen height
+        width: screenSize.width,
+        height: screenSize.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: const LinearGradient(
@@ -79,8 +79,8 @@ class HomePage extends StatelessWidget {
               child: Image.asset(
                 'assets/ragachikitsalogo.png',
                 semanticLabel: 'ragachikitsalogo',
-                width: 69, // Set width as in original
-                height: 40, // Set height as in original
+                width: 69,
+                height: 40,
               ),
             ),
             Positioned(
@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
               top: 160,
               left: 32,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Align text left
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Soothing Raaga of the Day', style: textStyle20),
                   const SizedBox(height: 21),
@@ -120,64 +120,80 @@ class HomePage extends StatelessWidget {
                       image: const DecorationImage(
                         image: AssetImage(
                             'assets/Rectangle25.png'), // Use the provided image
-                        fit: BoxFit.fitWidth, // Use BoxFit.fill to match the design
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    child: Stack( // Use Stack to position the play button
-                      children: [
-                        Positioned(
-                          top: 10, // Adjusted from 78 to better fit image.
-                          left: 15,  // Adjusted from 49 to better fit image.
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    child:  Padding(
+                      padding: const EdgeInsets.only(left: 20.0, top: 30),
+                      child: Stack(
+                        children: [
+                          Row(
                             children: [
-                              const Text('Gaanamurthi Raaga',
-                                  style: textStyle20),
-                              const SizedBox(height: 10),
-                              SizedBox(
-                                width: 200, // added a width constraint
-                                child: const Text(
-                                  '> Reduces stress and calms the mind.',
-                                  style: textStyle13,
+                              Container(
+                                width: 35,
+                                height: 35,
+                                margin: const EdgeInsets.only(right: 9),
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/Image2.png'),
+                                    fit: BoxFit.fitWidth,
+                                  ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 200, // added a width constraint
-                                child: const Text(
-                                  '> Lowers heart rate and blood pressure.',
-                                  style: textStyle13,
+                              const Text(
+                                'Gaanamurthi Raaga',
+                                style: textStyle20,
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: 35,
+                                height: 35,
+                                margin: const EdgeInsets.only(right: 4),
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/Icons8play501.png'),
+                                    fit: BoxFit.fitWidth,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 200, // added a width constraint
-                                child: const Text(
-                                    '> Promotes deep breathing and lung health.',
-                                    style: textStyle13),
-                              ),
-                              SizedBox(
-                                width: 200, // added a width constraint
-                                child: const Text('> Promotes emotional stability.',
-                                    style: textStyle13),
                               ),
                             ],
                           ),
-                        ),
-                        Positioned(
-                          top: 150, // Adjusted from 77
-                          left: 261,
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/Icons8play501.png'), // Use AssetImage
-                                fit: BoxFit.fitWidth,
-                              ),
+                          Positioned(
+                            top: 65,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 300,
+                                  child: const Text(
+                                    '> Reduces stress and calms the mind.',
+                                    style: textStyle13,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: const Text(
+                                    '> Lowers heart rate and blood pressure.',
+                                    style: textStyle13,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: const Text(
+                                      '> Promotes deep breathing and lung health.',
+                                      style: textStyle13),
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: const Text(
+                                      '> Promotes emotional stability.',
+                                      style: textStyle13),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -186,16 +202,15 @@ class HomePage extends StatelessWidget {
 
             // Wellness Tools Section
             Positioned(
-              top: 440,
+              top: 450,
               left: 0,
               right: 0,
               child: Column(
-
                 children: [
                   const Text('Wellness Tools', style: textStyle20),
                   const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -203,20 +218,20 @@ class HomePage extends StatelessWidget {
                           text1: 'Search Raagas ',
                           text2: 'by Time',
                           textStyle: textStyle16,
-                            image: '',
+                          image: '',
                         ),
                         _buildWellnessButton(
                           text1: 'Melody List',
                           text2: '',
                           textStyle: textStyle16,
-                          image: '', // No image for this button
+                          image: '',
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -224,13 +239,13 @@ class HomePage extends StatelessWidget {
                           text1: 'Favorite Raaga ',
                           text2: 'Playlist',
                           textStyle: textStyle16,
-                          image: '', // No image
+                          image: '',
                         ),
                         _buildWellnessButton(
                           text1: 'Get Raaga for',
                           text2: 'Relief',
                           textStyle: textStyle16,
-                          image: '', // No image
+                          image: '',
                         ),
                       ],
                     ),
@@ -247,9 +262,9 @@ class HomePage extends StatelessWidget {
               child: _buildBottomNavigation(),
             ),
             Positioned(
-              top: 734,
-              left: 0, // changed from 69
-              right: 0, // added right
+              top: 750,
+              left: 0,
+              right: 0,
               child: const Text(
                 'Traditional wisdom associates raagas with ',
                 textAlign: TextAlign.center,
@@ -257,8 +272,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 749,
-              left: 0, // changed from 93.
+              top: 765,
+              left: 0,
               right: 0,
               child: const Text(
                 'specific times for optimal benefits.',
@@ -289,7 +304,7 @@ class HomePage extends StatelessWidget {
               offset: const Offset(0, 4),
               blurRadius: 4),
         ],
-        color: const Color(0xFFD48D66), // Changed from RGBA
+        color: const Color(0xFFD48D66),
         border: Border.all(color: const Color(0xFF691705), width: 1),
       ),
       child: Center(
@@ -297,13 +312,12 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (image.isNotEmpty)
-            //checks if the image string is empty or not.
               Container(
                 width: 25,
                 height: 25,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image), // Use AssetImage
+                    image: AssetImage(image),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -325,7 +339,7 @@ class HomePage extends StatelessWidget {
       height: 1,
     );
     return Container(
-      height: 100, // Increased height
+      height: 100,
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -366,7 +380,7 @@ class HomePage extends StatelessWidget {
           height: 30,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(icon), // Use AssetImage
+              image: AssetImage(icon),
               fit: BoxFit.fitWidth,
             ),
           ),
