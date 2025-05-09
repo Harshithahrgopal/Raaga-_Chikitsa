@@ -48,20 +48,20 @@ class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
           text,
           style: TextStyle(
             fontSize: 48,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.normal,
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 3
-              ..color = Color(0xFFFFBC97), // Outline color from Figma
+              ..color = const Color(0xFFFFBC97), // Keep const here
           ),
         ),
         // Fill
-        Text(
+        Text( // Removed const here
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 48,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF5C0202), // Fill color from Figma
+            fontWeight: FontWeight.normal,
+            color: Color(0xFF5C0202),
           ),
         ),
       ],
@@ -93,10 +93,13 @@ class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
                 child: Center(
                   child: RotationTransition(
                     turns: _controller,
-                    child: Image.asset(
-                      'assets/main_logo.png',
-                      width: 320,
-                      height: 320,
+                    child: SizedBox( //Added SizedBox to limit the size.
+                      width: 390,  // set the width from the other code.
+                      height: 315, // set the height from the other code.
+                      child: Image.asset(
+                        'assets/main_logo.png',
+                        fit: BoxFit.fitWidth, // added fit
+                      ),
                     ),
                   ),
                 ),
@@ -110,18 +113,19 @@ class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
                   // Define your navigation here
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFCC8866), // Button color
-                  foregroundColor: Colors.white,      // Text color
+                  backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59), // Button color from the other code
+                  foregroundColor: const Color(0xFF5c0202),      // Text color from the other code.
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(24), // borderRadius from the other code
                   ),
                   elevation: 4,
                 ),
                 child: const Text(
                   'Get Started',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 28, fontFamily: 'Inter' // added font family and size
+                  ),
                 ),
               ),
 
@@ -132,8 +136,9 @@ class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
                 child: Text(
                   'Your journey to peace begins with a raga',
                   style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
+                      fontSize: 18, // size from the other code
+                      color:  Color(0xFF691705), // color from the other code
+                      fontFamily: 'Inter'
                   ),
                 ),
               ),
@@ -144,3 +149,4 @@ class _RaagaChikitsaHomePageState extends State<RaagaChikitsaHomePage>
     );
   }
 }
+
