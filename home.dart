@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'melodylist.dart'; // Import the melodylist.dart file
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -123,7 +124,7 @@ class HomePage extends StatelessWidget {
                         fit: BoxFit.fill,
                       ),
                     ),
-                    child:  Padding(
+                    child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, top: 30),
                       child: Stack(
                         children: [
@@ -163,29 +164,29 @@ class HomePage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 300,
-                                  child: const Text(
+                                  child: Text(
                                     '> Reduces stress and calms the mind.',
                                     style: textStyle13,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 300,
-                                  child: const Text(
+                                  child: Text(
                                     '> Lowers heart rate and blood pressure.',
                                     style: textStyle13,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 300,
-                                  child: const Text(
+                                  child: Text(
                                       '> Promotes deep breathing and lung health.',
                                       style: textStyle13),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 300,
-                                  child: const Text(
+                                  child: Text(
                                       '> Promotes emotional stability.',
                                       style: textStyle13),
                                 ),
@@ -225,6 +226,12 @@ class HomePage extends StatelessWidget {
                           text2: '',
                           textStyle: textStyle16,
                           image: '',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const MelodyList()),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -292,39 +299,43 @@ class HomePage extends StatelessWidget {
       {required String text1,
         required String text2,
         required TextStyle textStyle,
-        String image = ''}) {
-    return Container(
-      width: 145,
-      height: 75,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              offset: const Offset(0, 4),
-              blurRadius: 4),
-        ],
-        color: const Color(0xFFD48D66),
-        border: Border.all(color: const Color(0xFF691705), width: 1),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (image.isNotEmpty)
-              Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.fitWidth,
+        String image = '',
+        VoidCallback? onTap}) {
+    return GestureDetector( // Wrap with GestureDetector for tap event
+      onTap: onTap,
+      child: Container(
+        width: 145,
+        height: 75,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.25),
+                offset: const Offset(0, 4),
+                blurRadius: 4),
+          ],
+          color: const Color(0xFFD48D66),
+          border: Border.all(color: const Color(0xFF691705), width: 1),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (image.isNotEmpty)
+                Container(
+                  width: 25,
+                  height: 25,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(image),
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
-              ),
-            Text(text1, style: textStyle),
-            if (text2.isNotEmpty) Text(text2, style: textStyle),
-          ],
+              Text(text1, style: textStyle),
+              if (text2.isNotEmpty) Text(text2, style: textStyle),
+            ],
+          ),
         ),
       ),
     );
@@ -390,4 +401,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
