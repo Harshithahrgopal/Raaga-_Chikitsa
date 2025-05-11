@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart'; // Import your home.dart file
+import 'vanaspati.dart'; // Corrected import for VanaspatiScreen
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(212, 141, 102, 1);
@@ -101,31 +102,31 @@ class MelodyList extends StatelessWidget {
               right: 20, // Added right padding to control width
               child: Column(
                 children: [
-                  _buildMelodyItem('Kanakangi'),
+                  _buildMelodyItem(context, 'Kanakangi'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('ratnangi'),
+                  _buildMelodyItem(context, 'ratnangi'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Ganamurti'),
+                  _buildMelodyItem(context, 'Ganamurti'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Vanaspati'),
+                  _buildMelodyItem(context, 'Vanaspati', navigateToVanaspati: true), // Make Vanaspati tappable
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Manavati'),
+                  _buildMelodyItem(context, 'Manavati'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Tanarupi'),
+                  _buildMelodyItem(context, 'Tanarupi'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Senavati'),
+                  _buildMelodyItem(context, 'Senavati'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Hanumatodi'),
+                  _buildMelodyItem(context, 'Hanumatodi'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Dhenuka'),
+                  _buildMelodyItem(context, 'Dhenuka'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Natakapriya'),
+                  _buildMelodyItem(context, 'Natakapriya'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Kokilapriya'),
+                  _buildMelodyItem(context, 'Kokilapriya'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Roopavathi'),
+                  _buildMelodyItem(context, 'Roopavathi'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem('Gayakapriya'),
+                  _buildMelodyItem(context, 'Gayakapriya'),
                 ],
               ),
             ),
@@ -135,18 +136,29 @@ class MelodyList extends StatelessWidget {
     );
   }
 
-  Widget _buildMelodyItem(String melodyName) {
-    return Container(
-      width: double.infinity, // Make each item take full available width
-      height: itemHeight,
-      decoration: BoxDecoration(borderRadius: itemRadius, color: raagaDivColor), // Set the desired color
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(melodyName, style: itemTextStyle),
-          const Text('>', style: arrowTextStyle),
-        ],
+  Widget _buildMelodyItem(BuildContext context, String melodyName, {bool navigateToVanaspati = false}) {
+    return GestureDetector(
+      onTap: () {
+        if (navigateToVanaspati) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const VanaspatiScreen()),
+          );
+        }
+        // You can add navigation logic for other melody items here if needed
+      },
+      child: Container(
+        width: double.infinity, // Make each item take full available width
+        height: itemHeight,
+        decoration: BoxDecoration(borderRadius: itemRadius, color: raagaDivColor), // Set the desired color
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(melodyName, style: itemTextStyle),
+            const Text('>', style: arrowTextStyle),
+          ],
+        ),
       ),
     );
   }
