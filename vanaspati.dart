@@ -131,9 +131,9 @@ class VanaspatiScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Image.asset('assets/Icons8shuffle241(1).png', width: 24, height: 24, fit: BoxFit.contain),
+                          Image.asset('assets/Icons8shuffle241 (1).png', width: 24, height: 24, fit: BoxFit.contain), // Corrected file name
                           Image.asset('assets/Icons8last481.png', width: 30, height: 30, fit: BoxFit.contain),
-                          Image.asset('assets/Icons8play501(1).png', width: 25, height: 25, fit: BoxFit.contain),
+                          Image.asset('assets/Icons8play501 (1).png', width: 25, height: 25, fit: BoxFit.contain), // Corrected file name
                           Transform.rotate(
                             angle: math.pi,
                             child: Image.asset('assets/Icons8last482.png', width: 30, height: 30, fit: BoxFit.contain),
