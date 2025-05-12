@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'melodylist.dart'; // Import the melodylist.dart file
+import 'favorite.dart'; // Import the favorite.dart file
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -64,10 +65,8 @@ class HomePage extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: const LinearGradient(
-            begin: Alignment(
-                6.123234262925839e-17, 1), // Alignment.centerLeft
-            end: Alignment(
-                -1, 6.123234262925839e-17), // Alignment.centerRight
+            begin: Alignment(6.123234262925839e-17, 1),
+            end: Alignment(-1, 6.123234262925839e-17),
             colors: orangeGradientColors,
           ),
         ),
@@ -119,8 +118,7 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: brownColor, width: 2),
                       image: const DecorationImage(
-                        image: AssetImage(
-                            'assets/Rectangle25.png'), // Use the provided image
+                        image: AssetImage('assets/Rectangle25.png'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -247,6 +245,12 @@ class HomePage extends StatelessWidget {
                           text2: 'Playlist',
                           textStyle: textStyle16,
                           image: '',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Favoriteplaylist()), // Navigate to Favoriteplaylist
+                            );
+                          },
                         ),
                         _buildWellnessButton(
                           text1: 'Get Raaga for',
@@ -301,7 +305,7 @@ class HomePage extends StatelessWidget {
         required TextStyle textStyle,
         String image = '',
         VoidCallback? onTap}) {
-    return GestureDetector( // Wrap with GestureDetector for tap event
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 145,
