@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'melodylist.dart'; // Import the melodylist.dart file
 import 'favorite.dart'; // Import the favorite.dart file
+import 'raagarelief.dart'; // Import the RaagaRemediesScreen
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -257,6 +258,12 @@ class HomePage extends StatelessWidget {
                           text2: 'Relief',
                           textStyle: textStyle16,
                           image: '',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const RaagaRemediesScreen()),
+                            );
+                          },
                         ),
                       ],
                     ),
