@@ -1,0 +1,233 @@
+import 'package:flutter/material.dart';
+
+const brown = Color.fromRGBO(92, 2, 2, 1);
+const lightBrown = Color.fromRGBO(105, 23, 5, 1);
+const lightContainerColor = Color(0xFFD48D66);
+const darkBorderColor = Color(0xFFD48D66);
+const veryLightBrownContainerColor = Color(0xFFF5E0C3); // A very light shade of brown
+
+class RaagaRemediesScreen extends StatelessWidget {
+  const RaagaRemediesScreen({super.key});
+
+  Widget _buildRaagaItem(String name) {
+    return Container(
+      width: 340,
+      height: 48,
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: brown.withOpacity(0.7), // Brown background for each item
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            name,
+            style: const TextStyle(
+              color: veryLightBrownContainerColor, // Very light brown text
+              fontFamily: 'Inter',
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+          const Text(
+            '>',
+            style: TextStyle(
+              color: veryLightBrownContainerColor,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: Container(
+        width: screenWidth,
+        height: screenHeight,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Color(0xFFFFf1db), Color(0xFFFFbc97)],
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: screenHeight * 0.08,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(212, 141, 102, 0.95),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Image.asset(
+                        'assets/arrow_left.png',
+                        width: screenWidth * 0.07,
+                        height: screenHeight * 0.04,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Text(
+                      'Raaga for Relief',
+                      style: TextStyle(
+                        color: brown,
+                        fontFamily: 'Inter',
+                        fontSize: screenWidth * 0.05,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    Image.asset('assets/ragachikitsalogo.png', width: screenWidth * 0.09, height: screenHeight * 0.05),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.12,
+              left: screenWidth * 0.28,
+              child: Text(
+                'Raaga Remedies',
+                style: TextStyle(
+                  color: brown,
+                  fontFamily: 'Inter',
+                  fontSize: screenWidth * 0.045,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.18,
+              left: screenWidth * 0.07,
+              child: Container(
+                width: screenWidth * 0.86,
+                height: screenHeight * 0.065,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(17),
+                  color: const Color(0xFFFFF1DB),
+                  border: Border.all(color: const Color(0xFF6A1805), width: 2),
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Select your symptom or feeling',
+                          style: TextStyle(
+                            color: Color(0xCACA1805),
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Image.asset('assets/Image9.png', width: 24, height: 24), // Added Image9
+                    const SizedBox(width: 8), // Add some spacing
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.28,
+              left: screenWidth * 0.34,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24), side: const BorderSide(color: Color(0xFF6A1805), width: 3)),
+                  elevation: 4,
+                ),
+                child: Text(
+                  'Get Raagas',
+                  style: TextStyle(
+                    color: brown,
+                    fontFamily: 'Inter',
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.38, // Adjusted top position for the "Healing Raagas" container
+              left: screenWidth * 0.05,
+              right: screenWidth * 0.05,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: veryLightBrownContainerColor.withOpacity(0.8), // Very light brown container background
+                  border: Border.all(color: darkBorderColor, width: 2), // Border color
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.music_note, color: brown, size: 26),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Healing Raagas',
+                            style: TextStyle(
+                              color: brown,
+                              fontFamily: 'Inter',
+                              fontSize: screenWidth * 0.05,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ...[
+                      _buildRaagaItem('Hanumatodi'),
+                      _buildRaagaItem('Gayakapriya'),
+                      _buildRaagaItem('Kanakangi'),
+                      _buildRaagaItem('Vanaspati'),
+                      _buildRaagaItem('Manavati'),
+                      // Add more raagas if needed
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: screenHeight * 0.05, // Slightly higher bottom position
+              left: 0,
+              right: 0,
+              child: Text(
+                'Music speaks what the heart feels — let it heal you.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: lightBrown,
+                  fontFamily: 'Inter',
+                  fontSize: screenWidth * 0.03,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
