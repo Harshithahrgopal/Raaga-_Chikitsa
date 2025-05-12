@@ -2,12 +2,36 @@ import 'package:flutter/material.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(105, 23, 5, 1);
-const lightContainerColor = Color(0xFFD48D66);
 const darkBorderColor = Color(0xFFD48D66);
 const veryLightBrownContainerColor = Color(0xFFF5E0C3); // A very light shade of brown
+const lightBrownContainerColor = Color(0xFFE0C8A9); // Light brown for the main container
 
-class RaagaRemediesScreen extends StatelessWidget {
+class RaagaRemediesScreen extends StatefulWidget {
   const RaagaRemediesScreen({super.key});
+
+  @override
+  State<RaagaRemediesScreen> createState() => _RaagaRemediesScreenState();
+}
+
+class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
+  String? _selectedProblem;
+  List<String> _currentRaagas = [];
+  bool _showRaagaContainer = false;
+  final List<String> _problems = [
+    'General Wellness',
+    'Stress & Anxiety',
+    'Sleep Issues',
+    'Pain Relief',
+    // Add more problems here
+  ];
+
+  final Map<String, List<String>> _raagaRemedies = {
+    'General Wellness': ['Bhairavi', 'Yaman', 'Kalyani'],
+    'Stress & Anxiety': ['Shivranjani', 'Pilu', 'Darbari Kanada'],
+    'Sleep Issues': ['Malkauns', 'Jog', 'Ahir Bhairav'],
+    'Pain Relief': ['Todi', 'Multani', 'Charukeshi'],
+    // Add more mappings for other problems
+  };
 
   Widget _buildRaagaItem(String name) {
     return Container(
@@ -42,6 +66,17 @@ class RaagaRemediesScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _getRaagasForProblem() {
+    setState(() {
+      _currentRaagas = _raagaRemedies[_selectedProblem] ?? [];
+      _showRaagaContainer = true; // Set the flag to show the container
+      if (_currentRaagas.isEmpty && _selectedProblem != null) {
+        // Optionally handle cases where there are no specific raagas for a problem
+        _currentRaagas = _raagaRemedies['General Wellness']!;
+      }
+    });
   }
 
   @override
@@ -124,24 +159,33 @@ class RaagaRemediesScreen extends StatelessWidget {
                   color: const Color(0xFFFFF1DB),
                   border: Border.all(color: const Color(0xFF6A1805), width: 2),
                 ),
-                child: Row(
-                  children: [
-                    const Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Select your symptom or feeling',
-                          style: TextStyle(
-                            color: Color(0xCACA1805),
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Select your symptom or feeling',
+                    hintStyle: const TextStyle(
+                      color: Color(0xCACA1805),
+                      fontFamily: 'Inter',
+                      fontSize: 16,
                     ),
-                    Image.asset('assets/Image9.png', width: 24, height: 24), // Added Image9
-                    const SizedBox(width: 8), // Add some spacing
-                  ],
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Image.asset('assets/Image9.png', width: 24, height: 24),
+                    ),
+                  ),
+                  value: _selectedProblem,
+                  items: _problems.map((problem) {
+                    return DropdownMenuItem<String>(
+                      value: problem,
+                      child: Text(problem),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedProblem = newValue;
+                    });
+                  },
+                  icon: const SizedBox.shrink(), // Remove the default dropdown arrow
                 ),
               ),
             ),
@@ -149,7 +193,7 @@ class RaagaRemediesScreen extends StatelessWidget {
               top: screenHeight * 0.28,
               left: screenWidth * 0.34,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _getRaagasForProblem, // Call the function to update raagas and show container
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24), side: const BorderSide(color: Color(0xFF6A1805), width: 3)),
@@ -166,50 +210,51 @@ class RaagaRemediesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: screenHeight * 0.38, // Adjusted top position for the "Healing Raagas" container
-              left: screenWidth * 0.05,
-              right: screenWidth * 0.05,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: veryLightBrownContainerColor.withOpacity(0.8), // Very light brown container background
-                  border: Border.all(color: darkBorderColor, width: 2), // Border color
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.music_note, color: brown, size: 26),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Healing Raagas',
-                            style: TextStyle(
-                              color: brown,
-                              fontFamily: 'Inter',
-                              fontSize: screenWidth * 0.05,
-                              fontWeight: FontWeight.normal,
+            if (_showRaagaContainer) // Conditionally show the container
+              Positioned(
+                top: screenHeight * 0.38, // Adjusted top position for the "Healing Raagas" container
+                left: screenWidth * 0.05,
+                right: screenWidth * 0.05,
+                bottom: screenHeight * 0.12,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: lightBrownContainerColor.withOpacity(0.8), // Light brown container background
+                    border: Border.all(color: darkBorderColor, width: 2), // Border color
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.music_note, color: brown, size: 26),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Healing Raagas',
+                              style: TextStyle(
+                                color: brown,
+                                fontFamily: 'Inter',
+                                fontSize: screenWidth * 0.05,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    ...[
-                      _buildRaagaItem('Hanumatodi'),
-                      _buildRaagaItem('Gayakapriya'),
-                      _buildRaagaItem('Kanakangi'),
-                      _buildRaagaItem('Vanaspati'),
-                      _buildRaagaItem('Manavati'),
-                      // Add more raagas if needed
+                      const SizedBox(height: 8),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: _currentRaagas.map((raaga) => _buildRaagaItem(raaga)).toList(),
+                          ),
+                        ),
+                      ),
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
             Positioned(
               bottom: screenHeight * 0.05, // Slightly higher bottom position
               left: 0,
