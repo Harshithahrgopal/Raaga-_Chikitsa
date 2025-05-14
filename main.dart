@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login.dart'; // Import the LoginPage
 import 'signup.dart';// Import the SignUpPage
 import 'home.dart';
+import 'melodylist.dart';
 import 'dart:math' as math;
 
 void main() {
