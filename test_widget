@@ -1,0 +1,12 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:my_flutter_app/main.dart';
+// Replace with your real project name
+
+void main() {
+  testWidgets('Find Hello World text and button', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    expect(find.text('Hello World'), findsOneWidget);
+    expect(find.text('Go to Second Page'), findsOneWidget);
+  });
+}
