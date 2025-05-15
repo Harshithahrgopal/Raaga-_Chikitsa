@@ -18,16 +18,21 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
   Duration position = Duration.zero;
   bool isPlaying = false;
   bool isAudioLoaded = false;
+  bool _mounted = false;
+  bool hasStarted = false;
+
+  int currentAudioIndex = 1;
+  final int totalAudios = 10;
+
   StreamSubscription? _playerStateSubscription;
   StreamSubscription? _durationSubscription;
   StreamSubscription? _positionSubscription;
-  bool _mounted = false;
 
   @override
   void initState() {
     super.initState();
     _mounted = true;
-    setAudio();
+
     _playerStateSubscription = audioPlayer.onPlayerStateChanged.listen((state) {
       if (_mounted) {
         setState(() {
@@ -53,16 +58,16 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
     });
   }
 
-  Future<void> setAudio() async {
+  Future<void> setAudioByIndex(int index) async {
     try {
-      await audioPlayer.setSource(AssetSource('audio/vanaspati.wav')); // ✅ Correct path
+      await audioPlayer.setSource(AssetSource('audio/M4/M4($index).wav'));
       if (_mounted) {
         setState(() {
           isAudioLoaded = true;
         });
       }
     } catch (e) {
-      print('Error loading audio asset: $e');
+      print('Error loading audio asset M4($index).wav: $e');
       if (_mounted) {
         setState(() {
           isAudioLoaded = false;
@@ -193,10 +198,12 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                 IconButton(
                   icon: Image.asset('assets/Icons8last481.png', width: 30),
                   onPressed: () async {
-                    if (position > const Duration(seconds: 5)) {
-                      await audioPlayer.seek(position - const Duration(seconds: 5));
+                    if (currentAudioIndex > 1) {
+                      currentAudioIndex--;
+                      await setAudioByIndex(currentAudioIndex);
+                      await audioPlayer.resume();
                     } else {
-                      await audioPlayer.seek(Duration.zero);
+                      print('Already at the first audio file.');
                     }
                   },
                 ),
@@ -207,10 +214,17 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     color: brown,
                   ),
                   onPressed: () async {
-                    if (isAudioLoaded) {
-                      isPlaying ? await audioPlayer.pause() : await audioPlayer.resume();
+                    if (!hasStarted) {
+                      currentAudioIndex = 1;
+                      await setAudioByIndex(currentAudioIndex);
+                      await audioPlayer.resume();
+                      hasStarted = true;
                     } else {
-                      print('Audio not loaded.');
+                      if (isAudioLoaded) {
+                        isPlaying ? await audioPlayer.pause() : await audioPlayer.resume();
+                      } else {
+                        print('Audio not loaded.');
+                      }
                     }
                   },
                 ),
@@ -219,16 +233,28 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                   child: IconButton(
                     icon: Image.asset('assets/Icons8last482.png', width: 30),
                     onPressed: () async {
-                      final newPosition = position + const Duration(seconds: 5);
-                      if (newPosition < (duration ?? Duration.zero)) {
-                        await audioPlayer.seek(newPosition);
+                      if (currentAudioIndex < totalAudios) {
+                        currentAudioIndex++;
+                        await setAudioByIndex(currentAudioIndex);
+                        await audioPlayer.resume();
                       } else {
-                        await audioPlayer.seek(duration ?? Duration.zero);
+                        print('No more audio files.');
                       }
                     },
                   ),
                 ),
-                Image.asset('assets/Icons8add481.png', width: 35),
+                IconButton(
+                  icon: Image.asset('assets/Icons8add481.png', width: 35),
+                  onPressed: () async {
+                    if (currentAudioIndex < totalAudios) {
+                      currentAudioIndex++;
+                      await setAudioByIndex(currentAudioIndex);
+                      await audioPlayer.resume();
+                    } else {
+                      print('No more audio files.');
+                    }
+                  },
+                ),
               ],
             ),
             Row(
