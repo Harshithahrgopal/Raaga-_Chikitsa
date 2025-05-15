@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home.dart'; // Import your home.dart file
-import 'vanaspati.dart'; // Corrected import for VanaspatiScreen
+import 'home.dart';
+import 'vanaspati.dart';
+import 'ganamurti.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(212, 141, 102, 1);
@@ -9,7 +10,7 @@ const arrowBrown = Color.fromRGBO(105, 23, 5, 1);
 const borderRadiusAll = BorderRadius.all(Radius.circular(15));
 final BorderRadius itemRadius = BorderRadius.circular(12);
 const itemHeight = 44.0;
-const dividerHeight = 8.0; // Increased spacing between raaga divs
+const dividerHeight = 8.0;
 
 const titleStyle = TextStyle(
   color: brown,
@@ -17,23 +18,25 @@ const titleStyle = TextStyle(
   fontSize: 30,
   fontWeight: FontWeight.normal,
   height: 1,
-  backgroundColor: Colors.transparent, // Make background transparent
+  backgroundColor: Colors.transparent,
 );
+
 const itemTextStyle = TextStyle(
   color: brown,
   fontFamily: 'Inter',
   fontSize: 24,
   fontWeight: FontWeight.normal,
   height: 1,
-  backgroundColor: Colors.transparent, // Make background transparent
+  backgroundColor: Colors.transparent,
 );
+
 const arrowTextStyle = TextStyle(
   color: arrowBrown,
   fontFamily: 'Inter',
   fontSize: 25,
   fontWeight: FontWeight.normal,
   height: 1,
-  backgroundColor: Colors.transparent, // Make background transparent
+  backgroundColor: Colors.transparent,
 );
 
 class MelodyList extends StatelessWidget {
@@ -41,21 +44,21 @@ class MelodyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( // Using Scaffold to properly size the content
+    return Scaffold(
       body: Container(
-        width: double.infinity, // Make the container take full width
-        height: double.infinity, // Make the container take full height
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           borderRadius: borderRadiusAll,
           gradient: LinearGradient(
-            begin: Alignment(0, 0), // Start from the top
-            end: Alignment(0, 1), // End at the bottom
-            colors: [Color(0xFFFFbc97), Color(0xFFFFf1db)], // Swapped colors
+            begin: Alignment(0, 0),
+            end: Alignment(0, 1),
+            colors: [Color(0xFFFFbc97), Color(0xFFFFf1db)],
           ),
         ),
         child: Stack(
           children: <Widget>[
-            // Top Bar with Back Button and Title
+            // Top Bar
             Positioned(
               top: 0,
               left: 0,
@@ -71,7 +74,7 @@ class MelodyList extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const HomePage()), // Navigate to Home page
+                          MaterialPageRoute(builder: (context) => const HomePage()),
                         );
                       },
                       child: Image.asset(
@@ -87,7 +90,7 @@ class MelodyList extends StatelessWidget {
                       child: ClipOval(
                         child: Image.asset(
                           'assets/ragachikitsalogo.png',
-                          fit: BoxFit.cover, // Ensure the image fills the circle
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -99,7 +102,7 @@ class MelodyList extends StatelessWidget {
             Positioned(
               top: 80,
               left: 20,
-              right: 20, // Added right padding to control width
+              right: 20,
               child: Column(
                 children: [
                   _buildMelodyItem(context, 'Kanakangi'),
@@ -108,7 +111,7 @@ class MelodyList extends StatelessWidget {
                   const SizedBox(height: dividerHeight),
                   _buildMelodyItem(context, 'Ganamurti'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Vanaspati', navigateToVanaspati: true), // Make Vanaspati tappable
+                  _buildMelodyItem(context, 'Vanaspati'),
                   const SizedBox(height: dividerHeight),
                   _buildMelodyItem(context, 'Manavati'),
                   const SizedBox(height: dividerHeight),
@@ -136,21 +139,29 @@ class MelodyList extends StatelessWidget {
     );
   }
 
-  Widget _buildMelodyItem(BuildContext context, String melodyName, {bool navigateToVanaspati = false}) {
+  Widget _buildMelodyItem(BuildContext context, String melodyName) {
     return GestureDetector(
       onTap: () {
-        if (navigateToVanaspati) {
+        if (melodyName == 'Vanaspati') {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const VanaspatiScreen()),
           );
+        } else if (melodyName == 'Ganamurti') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const GanamurtiScreen()),
+          );
         }
-        // You can add navigation logic for other melody items here if needed
+        // Add more navigation cases here as needed
       },
       child: Container(
-        width: double.infinity, // Make each item take full available width
+        width: double.infinity,
         height: itemHeight,
-        decoration: BoxDecoration(borderRadius: itemRadius, color: raagaDivColor), // Set the desired color
+        decoration: BoxDecoration(
+          borderRadius: itemRadius,
+          color: raagaDivColor,
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
