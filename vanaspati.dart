@@ -194,9 +194,23 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image.asset('assets/Icons8shuffle241 (1).png', width: 24),
                 IconButton(
-                  icon: Image.asset('assets/Icons8last481.png', width: 30),
+                  icon: Image.asset('assets/Icons8shuffle241 (1).png', width: 24),
+                  onPressed: () async {
+                    final random = math.Random();
+                    int randomIndex = random.nextInt(totalAudios) + 1; // 1 to totalAudios
+
+                    if (randomIndex == currentAudioIndex && totalAudios > 1) {
+                      randomIndex = (randomIndex % totalAudios) + 1; // different audio
+                    }
+
+                    currentAudioIndex = randomIndex;
+                    await setAudioByIndex(currentAudioIndex);
+                    await audioPlayer.resume();
+                  },
+                ),
+                IconButton(
+                  icon: Image.asset('assets/Icons8last482.png', width: 30),
                   onPressed: () async {
                     if (currentAudioIndex > 1) {
                       currentAudioIndex--;
@@ -231,7 +245,7 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                 Transform.rotate(
                   angle: math.pi,
                   child: IconButton(
-                    icon: Image.asset('assets/Icons8last482.png', width: 30),
+                    icon: Image.asset('assets/Icons8last481.png', width: 30),
                     onPressed: () async {
                       if (currentAudioIndex < totalAudios) {
                         currentAudioIndex++;
