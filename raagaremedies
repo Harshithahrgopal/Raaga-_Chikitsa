@@ -18,18 +18,32 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
   List<String> _currentRaagas = [];
   bool _showRaagaContainer = false;
   final List<String> _problems = [
-    'General Wellness',
+    'Sleep & Relaxation Disorders',
     'Stress & Anxiety',
-    'Sleep Issues',
-    'Pain Relief',
+    'Hypertension & High Blood Pressure',
+    'Respiratory Issues (Asthma, Breathing Difficulties)',
+    'Fatigue & Lack of Energy',
+    'Digestive Disorders',
+    'Meditation & Mental Clarity',
+    'Heart & Emotional Healing',
+    'Anger & Irritability',
+    'Headache & Migraine',
+    'Depression & Mood Swings',
     // Add more problems here
   ];
 
   final Map<String, List<String>> _raagaRemedies = {
-    'General Wellness': ['Bhairavi', 'Yaman', 'Kalyani'],
-    'Stress & Anxiety': ['Shivranjani', 'Pilu', 'Darbari Kanada'],
-    'Sleep Issues': ['Malkauns', 'Jog', 'Ahir Bhairav'],
-    'Pain Relief': ['Todi', 'Multani', 'Charukeshi'],
+    'Sleep & Relaxation Disorders':['Ganamurti', 'Vanaspati', 'Natabhairavi', 'Pavani'],
+    'Stress & Anxiety':['Tanaroopi', 'Senavati', 'Mayamalavagowla', 'Vachaspathi'],
+    'Hypertension & High Blood Pressure': ['Keeravani', 'Chalanata', 'Ragavardhini', 'Hemavati'],
+    'Respiratory Issues (Asthma, Breathing Difficulties)':['Ratnangi', 'Charukesi', 'Jhalavarali', 'Dhavalambari'],
+    'Fatigue & Lack of Energy':['Manavati', 'Chayavati', 'Vagadhishvari', 'Bhavapriya'],
+    'Digestive Disorders':['Natakapriya', 'Chakravakam', 'Mararanjani', 'Raganarayani'],
+    'Meditation & Mental Clarity': ['Rupavati', 'Naganandini', 'Dhunibinnashadjam', 'Rasikapriya'],
+    'Heart & Emotional Healing':['Gayakapriya', 'Kharaharapriya', 'Namanarayani', 'Latangi'],
+    'Anger & Irritability':['Hanumatodi', 'Vakulabharanam', 'Yagapriya', 'Shamalangi'],
+    'Headache & Migraine':['Kokilapriya', 'Varunapriya', 'Shadvidamargini', 'Simhendramadhyamam'],
+    'Depression & Mood Swings':['Kanakangi', 'Jhankaradhvani', 'Dheerasankarabharanam', 'Gavambodhi'],
     // Add more mappings for other problems
   };
 
