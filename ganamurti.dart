@@ -302,7 +302,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
                       text: 'Ganamurthi($currentAudioIndex).wav',
                       style: const TextStyle(color: brown, fontSize: 14, fontWeight: FontWeight.w500),
                       scrollAxis: Axis.horizontal,
-                      blankSpace: 30.0,
+                      blankSpace: 195.0,
                       velocity: 30.0,
                       pauseAfterRound: Duration(seconds: 1),
                       startPadding: 10.0,
