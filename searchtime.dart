@@ -1,236 +1,368 @@
 import 'package:flutter/material.dart';
 
-class Searchtime extends StatefulWidget {
+class SearchTimeScreen extends StatefulWidget {
+  const SearchTimeScreen({super.key});
+
   @override
-  _SearchtimeState createState() => _SearchtimeState();
+  State<SearchTimeScreen> createState() => _SearchTimeScreenState();
 }
 
-class _SearchtimeState extends State<Searchtime> {
-  TimeOfDay selectedTime = TimeOfDay(hour: 7, minute: 30);
-  bool isAm = true;
+class _SearchTimeScreenState extends State<SearchTimeScreen> {
+  int? selectedHour;
+  int? selectedMinute;
   List<String> recommendedRaagas = [];
-
-  List<String> getRaagasForTime(TimeOfDay time) {
-    final int totalMinutes = time.hour * 60 + time.minute;
-
-    if (totalMinutes >= 300 && totalMinutes < 600) {
-      return ['Kanakangi', 'Ratnangi', 'Ganamurti'];
-    } else if (totalMinutes >= 600 && totalMinutes < 900) {
-      return ['Vanaspati', 'Manavati', 'Tanaroopi'];
-    } else if (totalMinutes >= 900 && totalMinutes < 1140) {
-      return ['Hanumatodi', 'Dheerasankarabharanam'];
-    } else {
-      return ['Gayakapriya', 'Vakulabharanam'];
-    }
-  }
-
-  void _pickTime() async {
-    TimeOfDay? newTime = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (newTime != null) {
-      setState(() {
-        selectedTime = newTime;
-        isAm = newTime.hour < 12;
-      });
-    }
-  }
 
   void _recommendRaagas() {
     setState(() {
-      recommendedRaagas = getRaagasForTime(selectedTime);
+      recommendedRaagas.clear();
+      if (selectedHour != null && selectedMinute != null) {
+        // Basic time-based raaga recommendation logic (replace with your actual logic)
+        if ((selectedHour! >= 5 && selectedHour! < 8) || (selectedHour! == 8 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Bhairav', 'Todi']);
+        } else if ((selectedHour! >= 8 && selectedHour! < 11) || (selectedHour! == 11 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Bilawal', 'Kalyan']);
+        } else if ((selectedHour! >= 11 && selectedHour! < 14) || (selectedHour! == 14 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Khamaj', 'Saranga']);
+        } else if ((selectedHour! >= 14 && selectedHour! < 17) || (selectedHour! == 17 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Yaman', 'Bhimpalasi']);
+        } else if ((selectedHour! >= 17 && selectedHour! < 20) || (selectedHour! == 20 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Puriya Kalyan', 'Marwa']);
+        } else {
+          recommendedRaagas.addAll(['Darbari Kanada', 'Malkauns']);
+        }
+      } else {
+        recommendedRaagas.add('Please select a valid time.');
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final hourStr = (selectedTime.hourOfPeriod).toString().padLeft(2, '0');
-    final minuteStr = selectedTime.minute.toString().padLeft(2, '0');
-
     return Scaffold(
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
+        width: 390,
+        height: 844,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
           gradient: LinearGradient(
-            colors: [Color(0xFFFFF1DB), Color(0xFFFFBC97)],
-            begin: Alignment.bottomCenter,
-            end: Alignment.centerLeft,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(255, 241, 219, 1),
+              Color.fromRGBO(255, 188, 151, 1),
+            ],
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top Header
-            Container(
-              height: 69,
-              color: Color.fromRGBO(212, 141, 102, 0.95),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset('assets/arrow_left.png', width: 30),
-                  Image.asset('assets/ragachikitsalogo.png', height: 50),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Text('Search By Time',
-                style: TextStyle(fontSize: 24, color: Color(0xFF5C0202))),
-            SizedBox(height: 10),
-            Text('Raaga Time Recommender',
-                style: TextStyle(fontSize: 22, color: Color(0xFF5C0202))),
-            SizedBox(height: 30),
-            Text('Select Time:',
-                style: TextStyle(fontSize: 18, color: Color(0xFF5C0202))),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                // Hour Input
-                Expanded(
-                  child: TextFormField(
-                    initialValue: hourStr,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Color(0xFF6A1805)),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFFFF1DB),
-                    ),
-                    style: TextStyle(fontSize: 24, color: Color(0xFF5C0202)),
-                    onChanged: (value) {
-                      final int? newHour = int.tryParse(value);
-                      if (newHour != null && newHour >= 1 && newHour <= 12) {
-                        setState(() {
-                          int hour24 = isAm
-                              ? (newHour == 12 ? 0 : newHour)
-                              : (newHour == 12 ? 12 : newHour + 12);
-                          selectedTime = TimeOfDay(
-                              hour: hour24, minute: selectedTime.minute);
-                        });
-                      }
-                    },
-                  ),
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Container(
+                width: 390,
+                height: 69,
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(212, 141, 102, 0.95),
                 ),
-                SizedBox(width: 10),
-                Text(":", style: TextStyle(fontSize: 24, color: Color(0xFF5C0202))),
-                SizedBox(width: 10),
-                // Minute Input
-                Expanded(
-                  child: TextFormField(
-                    initialValue: minuteStr,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Color(0xFF6A1805)),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    style: TextStyle(fontSize: 24, color: Color(0xFF5C0202)),
-                    onChanged: (value) {
-                      final int? newMinute = int.tryParse(value);
-                      if (newMinute != null && newMinute >= 0 && newMinute < 60) {
-                        setState(() {
-                          selectedTime = TimeOfDay(
-                              hour: selectedTime.hour, minute: newMinute);
-                        });
-                      }
-                    },
-                  ),
-                ),
-                SizedBox(width: 20),
-                ToggleButtons(
-                  isSelected: [isAm, !isAm],
-                  onPressed: (int index) {
-                    setState(() {
-                      isAm = index == 0;
-                      int hour = selectedTime.hour;
-                      if (isAm && hour >= 12) {
-                        selectedTime = TimeOfDay(
-                            hour: hour - 12, minute: selectedTime.minute);
-                      } else if (!isAm && hour < 12) {
-                        selectedTime = TimeOfDay(
-                            hour: hour + 12, minute: selectedTime.minute);
-                      }
-                    });
-                  },
-                  color: Color(0xFF5C0202),
-                  selectedColor: Colors.white,
-                  fillColor: Color(0xFFD48D66),
-                  borderRadius: BorderRadius.circular(8),
-                  children: [Text("AM"), Text("PM")],
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: _recommendRaagas,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFD48D66),
-                  foregroundColor: Color(0xFF5C0202),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    side: BorderSide(color: Color(0xFF6A1805), width: 3),
-                  ),
-                ),
-                child: Text('Recommend', style: TextStyle(fontSize: 18)),
-              ),
-            ),
-            SizedBox(height: 20),
-            if (recommendedRaagas.isNotEmpty) ...[
-              Container(
-                padding: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Color(0xFFD48D66),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Melodies for This Moment',
-                        style:
-                        TextStyle(fontSize: 20, color: Color(0xFF5C0202))),
-                    SizedBox(height: 10),
-                    ...recommendedRaagas.map(
-                          (raaga) => Container(
-                        margin: EdgeInsets.symmetric(vertical: 6),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFFD2B1),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(raaga,
-                                style: TextStyle(
-                                    fontSize: 20, color: Color(0xFF5C0202))),
-                            Icon(Icons.arrow_forward_ios,
-                                size: 16, color: Color(0xFF5C0202)),
-                          ],
-                        ),
+                    Image.asset(
+                      'assets/arrow_left.png',
+                      semanticLabel: 'arrow_left',
+                      height: 24,
+                    ),
+                    const Text(
+                      'Search By Time',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(92, 2, 2, 1),
+                        fontFamily: 'Inter',
+                        fontSize: 24,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
                       ),
-                    )
+                    ),
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/ragachikitsalogo.png',
+                        semanticLabel: 'ragachikitsalogo',
+                        height: 30,
+                        width: 30,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ],
-            Spacer(),
-            Center(
-              child: Text(
-                'Trust the time, feel the tune, heal the soul',
-                style: TextStyle(color: Color(0x806A1805), fontSize: 12),
+            ),
+            Positioned(
+              top: 86,
+              left: 49,
+              child: const Text(
+                'Raaga Time Recommender',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color.fromRGBO(92, 2, 2, 1),
+                  fontFamily: 'Inter',
+                  fontSize: 22,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
               ),
-            )
+            ),
+            Positioned(
+              top: 141,
+              left: 21,
+              child: const Text(
+                'Select Time (HH:MM):',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color.fromRGBO(92, 2, 2, 1),
+                  fontFamily: 'Inter',
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 178,
+              left: 41,
+              child: SizedBox(
+                width: 88,
+                child: DropdownButtonFormField<int>(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color.fromRGBO(255, 241, 219, 1),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(color: Color.fromRGBO(106, 24, 5, 1)),
+                    ),
+                  ),
+                  value: selectedHour,
+                  hint: const Text('HH', textAlign: TextAlign.center),
+                  items: List.generate(24, (index) => DropdownMenuItem(
+                    value: index,
+                    child: Text(
+                      index < 10 ? '0$index' : '$index',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(92, 2, 2, 1),
+                        fontFamily: 'Roboto',
+                        fontSize: 24,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  )),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedHour = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 188,
+              left: 145,
+              child: Text(
+                ':',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color.fromRGBO(92, 2, 2, 1),
+                  fontFamily: 'Inter',
+                  fontSize: 40,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 179,
+              left: 176,
+              child: SizedBox(
+                width: 87,
+                child: DropdownButtonFormField<int>(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color.fromRGBO(255, 241, 219, 1),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(color: Color.fromRGBO(106, 24, 5, 1)),
+                    ),
+                  ),
+                  value: selectedMinute,
+                  hint: const Text('MM', textAlign: TextAlign.center),
+                  items: List.generate(60, (index) => DropdownMenuItem(
+                    value: index,
+                    child: Text(
+                      index < 10 ? '0$index' : '$index',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(92, 2, 2, 1),
+                        fontFamily: 'Roboto',
+                        fontSize: 24,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  )),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedMinute = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Positioned(
+              top: 276,
+              left: 127,
+              child: GestureDetector(
+                onTap: _recommendRaagas,
+                child: Container(
+                  width: 124,
+                  height: 37,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.25),
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                      ),
+                    ],
+                    color: const Color.fromRGBO(212, 141, 102, 0.59),
+                    border: Border.all(
+                      color: const Color.fromRGBO(106, 24, 5, 1),
+                      width: 3,
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Recommend',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Color.fromRGBO(92, 2, 2, 1),
+                        fontFamily: 'Inter',
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 348,
+              left: 21,
+              child: Container(
+                width: 349,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromRGBO(212, 141, 102, 0.15),
+                  border: Border.all(
+                    color: const Color.fromRGBO(212, 141, 102, 1),
+                    width: 1,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/Image2.png',
+                            width: 26,
+                            height: 26,
+                            fit: BoxFit.fitWidth,
+                          ),
+                          const SizedBox(width: 16),
+                          const Text(
+                            'Melodies for This Moment',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Color.fromRGBO(92, 2, 2, 1),
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                              height: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      if (recommendedRaagas.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: recommendedRaagas.map((raaga) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  raaga,
+                                  style: const TextStyle(
+                                    color: Color.fromRGBO(92, 2, 2, 1),
+                                    fontFamily: 'Inter',
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1,
+                                  ),
+                                ),
+                                const Text(
+                                  '>',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(105, 23, 5, 1),
+                                    fontFamily: 'Inter',
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )).toList(),
+                        )
+                      else
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            'Please select a time and click Recommend.',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 794,
+              left: 79,
+              child: Text(
+                'Trust the time,feel the tune,heal the soul',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color.fromRGBO(106, 24, 5, 0.5),
+                  fontFamily: 'Inter',
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
+              ),
+            ),
           ],
         ),
       ),
