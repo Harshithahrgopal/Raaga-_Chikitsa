@@ -26,7 +26,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
 
   int currentAudioIndex = 1;
   final int totalAudios = 10;
-  final String audioFolderPath = 'audio/M3'; // You can update this path as needed
+  final String audioFolderPath = 'audio/M3';
 
   StreamSubscription? _playerStateSubscription;
   StreamSubscription? _durationSubscription;
@@ -170,7 +170,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
       left: 16,
       right: 16,
       child: Container(
-        height: 220,
+        height: 250,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(212, 141, 102, 0.38),
@@ -271,22 +271,34 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
                 ),
               ],
             ),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(formatTime(position), style: const TextStyle(color: brown, fontSize: 14)),
-                Expanded(
-                  child: Slider(
-                    activeColor: brown,
-                    inactiveColor: const Color.fromRGBO(212, 141, 102, 1),
-                    value: position.inSeconds.toDouble().clamp(0, (duration?.inSeconds.toDouble() ?? 0)),
-                    min: 0,
-                    max: duration?.inSeconds.toDouble() ?? 1,
-                    onChanged: (value) async {
-                      await audioPlayer.seek(Duration(seconds: value.toInt()));
-                    },
+                Row(
+                  children: [
+                    Text(formatTime(position), style: const TextStyle(color: brown, fontSize: 14)),
+                    Expanded(
+                      child: Slider(
+                        activeColor: brown,
+                        inactiveColor: const Color.fromRGBO(212, 141, 102, 1),
+                        value: position.inSeconds.toDouble().clamp(0, (duration?.inSeconds.toDouble() ?? 0)),
+                        min: 0,
+                        max: duration?.inSeconds.toDouble() ?? 1,
+                        onChanged: (value) async {
+                          await audioPlayer.seek(Duration(seconds: value.toInt()));
+                        },
+                      ),
+                    ),
+                    Text(formatTime(duration ?? Duration.zero), style: const TextStyle(color: brown, fontSize: 14)),
+                  ],
+                ),
+                const SizedBox(height: 1),
+                Center(
+                  child: Text(
+                    'Ganamurthi($currentAudioIndex).wav',
+                    style: const TextStyle(color: brown, fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                 ),
-                Text(formatTime(duration ?? Duration.zero), style: const TextStyle(color: brown, fontSize: 14)),
               ],
             ),
           ],
@@ -297,7 +309,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
 
   Widget _buildBenefitsTitle(double screenWidth) {
     return Positioned(
-      top: 330,
+      top: 340,
       left: 16,
       child: Text(
         'Wellness Benefits',
