@@ -260,14 +260,22 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
                   },
                   child: Image.asset('assets/Icons8last481.png', width: 30),
                 ),
+
+                // Modified IconButton for adding to favorites:
                 IconButton(
                   icon: Image.asset('assets/Icons8add481.png', width: 35),
                   onPressed: () {
-                    Provider.of<FavoritesProvider>(context, listen: false)
-                        .addRaaga('Ganamurthi');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Ganamurthi added to favorites!')),
-                    );
+                    final favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
+                    if (!favoritesProvider.favoriteRaagas.contains('Ganamurthi')) {
+                      favoritesProvider.addRaaga('Ganamurthi');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Ganamurthi added to favorites!')),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Ganamurthi is already in favorites.')),
+                      );
+                    }
                   },
                 ),
               ],
@@ -398,7 +406,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
         children: [
           Container(width: 8, height: 8, decoration: const BoxDecoration(color: brown, shape: BoxShape.circle)),
           const SizedBox(width: 8),
-          Expanded(child: Text(text, style: const TextStyle(color: brown, fontSize: 16))),
+          Expanded(child: Text(text, style: const TextStyle(color: brown))),
         ],
       ),
     );
