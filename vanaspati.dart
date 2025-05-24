@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
+
+import 'favorites_provider.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 
@@ -23,6 +26,7 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
 
   int currentAudioIndex = 1;
   final int totalAudios = 10;
+  final String audioFolderPath = 'audio/M4';
 
   StreamSubscription? _playerStateSubscription;
   StreamSubscription? _durationSubscription;
@@ -60,14 +64,14 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
 
   Future<void> setAudioByIndex(int index) async {
     try {
-      await audioPlayer.setSource(AssetSource('audio/M4/M4($index).wav'));
+      await audioPlayer.setSource(AssetSource('$audioFolderPath/M4($index).wav'));
       if (_mounted) {
         setState(() {
           isAudioLoaded = true;
         });
       }
     } catch (e) {
-      print('Error loading audio asset M4($index).wav: $e');
+      print('Error loading audio asset $audioFolderPath/M4($index).wav: $e');
       if (_mounted) {
         setState(() {
           isAudioLoaded = false;
@@ -113,7 +117,7 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
         child: Stack(
           children: <Widget>[
             _buildTopBar(screenWidth),
-            _buildAudioPlayerBox(screenWidth),
+            _buildAudioPlayerBox(screenWidth, context),
             _buildBenefitsTitle(screenWidth),
             _buildBenefitsBox(screenWidth),
             _buildFooterText(screenWidth),
@@ -160,7 +164,7 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
     );
   }
 
-  Widget _buildAudioPlayerBox(double screenWidth) {
+  Widget _buildAudioPlayerBox(double screenWidth, BuildContext context) {
     return Positioned(
       top: 87,
       left: 16,
@@ -198,30 +202,29 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                   icon: Image.asset('assets/Icons8shuffle241 (1).png', width: 24),
                   onPressed: () async {
                     final random = math.Random();
-                    int randomIndex = random.nextInt(totalAudios) + 1; // 1 to totalAudios
-
+                    int randomIndex = random.nextInt(totalAudios) + 1;
                     if (randomIndex == currentAudioIndex && totalAudios > 1) {
-                      randomIndex = (randomIndex % totalAudios) + 1; // different audio
+                      randomIndex = (randomIndex % totalAudios) + 1;
                     }
-
                     currentAudioIndex = randomIndex;
                     await setAudioByIndex(currentAudioIndex);
                     await audioPlayer.resume();
                   },
                 ),
-                Transform.rotate(
-                  angle: math.pi,
-                  child: IconButton(
-                    icon: Image.asset('assets/Icons8last481.png', width: 30), // Next Button (Rotated)
-                    onPressed: () async {
-                      if (currentAudioIndex < totalAudios) {
-                        currentAudioIndex++;
-                        await setAudioByIndex(currentAudioIndex);
-                        await audioPlayer.resume();
-                      } else {
-                        print('No more audio files.');
-                      }
-                    },
+                // Swapped: Now "Next" image is shown for "Previous" button
+                GestureDetector(
+                  onTap: () async {
+                    if (currentAudioIndex > 1) {
+                      currentAudioIndex--;
+                      await setAudioByIndex(currentAudioIndex);
+                      await audioPlayer.resume();
+                    } else {
+                      print('Already at the first audio file.');
+                    }
+                  },
+                  child: Transform.rotate(
+                    angle: math.pi,
+                    child: Image.asset('assets/Icons8last481.png', width: 30),
                   ),
                 ),
                 IconButton(
@@ -245,21 +248,9 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     }
                   },
                 ),
-                IconButton(
-                  icon: Image.asset('assets/Icons8last481.png', width: 30), // Previous Button
-                  onPressed: () async {
-                    if (currentAudioIndex > 1) {
-                      currentAudioIndex--;
-                      await setAudioByIndex(currentAudioIndex);
-                      await audioPlayer.resume();
-                    } else {
-                      print('Already at the first audio file.');
-                    }
-                  },
-                ),
-                IconButton(
-                  icon: Image.asset('assets/Icons8add481.png', width: 35),
-                  onPressed: () async {
+                // Swapped: Now "Previous" image is shown for "Next" button
+                GestureDetector(
+                  onTap: () async {
                     if (currentAudioIndex < totalAudios) {
                       currentAudioIndex++;
                       await setAudioByIndex(currentAudioIndex);
@@ -267,6 +258,17 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     } else {
                       print('No more audio files.');
                     }
+                  },
+                  child: Image.asset('assets/Icons8last481.png', width: 30),
+                ),
+                IconButton(
+                  icon: Image.asset('assets/Icons8add481.png', width: 35),
+                  onPressed: () {
+                    Provider.of<FavoritesProvider>(context, listen: false)
+                        .addRaaga('Vanaspati');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Vanaspati added to favorites!')),
+                    );
                   },
                 ),
               ],
