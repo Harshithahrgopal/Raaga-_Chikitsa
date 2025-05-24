@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
+
+import 'favorites_provider.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 
-class GanamurtiScreen extends StatefulWidget {
-  const GanamurtiScreen({super.key});
+class GanamurthiScreen extends StatefulWidget {
+  const GanamurthiScreen({super.key});
 
   @override
-  State<GanamurtiScreen> createState() => _GanamurtiScreenState();
+  State<GanamurthiScreen> createState() => _GanamurthiScreenState();
 }
 
-class _GanamurtiScreenState extends State<GanamurtiScreen> {
+class _GanamurthiScreenState extends State<GanamurthiScreen> {
   final AudioPlayer audioPlayer = AudioPlayer();
   Duration? duration;
   Duration position = Duration.zero;
@@ -23,6 +26,7 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
 
   int currentAudioIndex = 1;
   final int totalAudios = 10;
+  final String audioFolderPath = 'audio/M3'; // You can update this path as needed
 
   StreamSubscription? _playerStateSubscription;
   StreamSubscription? _durationSubscription;
@@ -60,14 +64,14 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
 
   Future<void> setAudioByIndex(int index) async {
     try {
-      await audioPlayer.setSource(AssetSource('audio/M3/M3($index).wav'));
+      await audioPlayer.setSource(AssetSource('$audioFolderPath/M3($index).wav'));
       if (_mounted) {
         setState(() {
           isAudioLoaded = true;
         });
       }
     } catch (e) {
-      print('Error loading audio asset M3($index).wav: $e');
+      print('Error loading audio asset $audioFolderPath/M3($index).wav: $e');
       if (_mounted) {
         setState(() {
           isAudioLoaded = false;
@@ -113,7 +117,7 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
         child: Stack(
           children: <Widget>[
             _buildTopBar(screenWidth),
-            _buildAudioPlayerBox(screenWidth),
+            _buildAudioPlayerBox(screenWidth, context),
             _buildBenefitsTitle(screenWidth),
             _buildBenefitsBox(screenWidth),
             _buildFooterText(screenWidth),
@@ -146,7 +150,7 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
               child: Image.asset('assets/arrow_left.png', width: 30, height: 30),
             ),
             Text(
-              'Ganamurti Raaga',
+              'Ganamurthi Raaga',
               style: TextStyle(
                 color: brown,
                 fontFamily: 'Inter',
@@ -160,7 +164,7 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
     );
   }
 
-  Widget _buildAudioPlayerBox(double screenWidth) {
+  Widget _buildAudioPlayerBox(double screenWidth, BuildContext context) {
     return Positioned(
       top: 87,
       left: 16,
@@ -181,7 +185,7 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
                 Image.asset('assets/Image3.png', width: 22, height: 22),
                 const SizedBox(width: 10),
                 Text(
-                  'Ganamurti',
+                  'Ganamurthi',
                   style: TextStyle(
                     color: brown,
                     fontFamily: 'Inter',
@@ -198,20 +202,17 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
                   icon: Image.asset('assets/Icons8shuffle241 (1).png', width: 24),
                   onPressed: () async {
                     final random = math.Random();
-                    int randomIndex = random.nextInt(totalAudios) + 1; // 1 to totalAudios
-
+                    int randomIndex = random.nextInt(totalAudios) + 1;
                     if (randomIndex == currentAudioIndex && totalAudios > 1) {
-                      randomIndex = (randomIndex % totalAudios) + 1; // different audio
+                      randomIndex = (randomIndex % totalAudios) + 1;
                     }
-
                     currentAudioIndex = randomIndex;
                     await setAudioByIndex(currentAudioIndex);
                     await audioPlayer.resume();
                   },
                 ),
-                IconButton(
-                  icon: Image.asset('assets/Icons8last482.png', width: 30),
-                  onPressed: () async {
+                GestureDetector(
+                  onTap: () async {
                     if (currentAudioIndex > 1) {
                       currentAudioIndex--;
                       await setAudioByIndex(currentAudioIndex);
@@ -220,6 +221,10 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
                       print('Already at the first audio file.');
                     }
                   },
+                  child: Transform.rotate(
+                    angle: math.pi,
+                    child: Image.asset('assets/Icons8last481.png', width: 30),
+                  ),
                 ),
                 IconButton(
                   icon: Icon(
@@ -242,24 +247,8 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
                     }
                   },
                 ),
-                Transform.rotate(
-                  angle: math.pi,
-                  child: IconButton(
-                    icon: Image.asset('assets/Icons8last481.png', width: 30),
-                    onPressed: () async {
-                      if (currentAudioIndex < totalAudios) {
-                        currentAudioIndex++;
-                        await setAudioByIndex(currentAudioIndex);
-                        await audioPlayer.resume();
-                      } else {
-                        print('No more audio files.');
-                      }
-                    },
-                  ),
-                ),
-                IconButton(
-                  icon: Image.asset('assets/Icons8add481.png', width: 35),
-                  onPressed: () async {
+                GestureDetector(
+                  onTap: () async {
                     if (currentAudioIndex < totalAudios) {
                       currentAudioIndex++;
                       await setAudioByIndex(currentAudioIndex);
@@ -267,6 +256,17 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
                     } else {
                       print('No more audio files.');
                     }
+                  },
+                  child: Image.asset('assets/Icons8last481.png', width: 30),
+                ),
+                IconButton(
+                  icon: Image.asset('assets/Icons8add481.png', width: 35),
+                  onPressed: () {
+                    Provider.of<FavoritesProvider>(context, listen: false)
+                        .addRaaga('Ganamurthi');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Ganamurthi added to favorites!')),
+                    );
                   },
                 ),
               ],
@@ -329,17 +329,17 @@ class _GanamurtiScreenState extends State<GanamurtiScreen> {
             children: [
               Text('Mental and Emotional Benefits:', style: TextStyle(color: brown, fontSize: screenWidth * 0.05)),
               const SizedBox(height: 8),
-              _buildBenefitRow('Balances mood swings and scattered thoughts.'),
-              _buildBenefitRow('Supports emotional grounding and inner stability.'),
-              _buildBenefitRow('Useful for meditation and quiet reflection.'),
-              _buildBenefitRow('Stimulates mental alertness without overstimulation.'),
+              _buildBenefitRow('Improves mental clarity and concentration.'),
+              _buildBenefitRow('Energizes the mind and elevates focus.'),
+              _buildBenefitRow('Boosts confidence and assertiveness.'),
+              _buildBenefitRow('Helps overcome mental fatigue and lethargy.'),
               const SizedBox(height: 16),
               Text('Physical Health Benefits:', style: TextStyle(color: brown, fontSize: screenWidth * 0.05)),
               const SizedBox(height: 8),
-              _buildBenefitRow('Prepares the body for rest and helps with mild insomnia.'),
-              _buildBenefitRow('Offers a gentle energy reset through sound resonance.'),
-              _buildBenefitRow('The calming effect can support parasympathetic nervous system activity.'),
-              _buildBenefitRow('The soothing tones can help reduce hypertension.'),
+              _buildBenefitRow('Enhances energy circulation in the body.'),
+              _buildBenefitRow('Improves metabolism and digestion.'),
+              _buildBenefitRow('Beneficial for respiratory health.'),
+              _buildBenefitRow('Can help relieve mild body aches or stiffness.'),
             ],
           ),
         ),
