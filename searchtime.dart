@@ -18,22 +18,28 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
       if (selectedHour != null && selectedMinute != null) {
         // Basic time-based raaga recommendation logic (replace with your actual logic)
         if ((selectedHour! >= 5 && selectedHour! < 8) || (selectedHour! == 8 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Bhairav', 'Todi']);
+          recommendedRaagas.addAll(['Hanumatodi', 'Gayakapriya']);
         } else if ((selectedHour! >= 8 && selectedHour! < 11) || (selectedHour! == 11 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Bilawal', 'Kalyan']);
+          recommendedRaagas.addAll(['Kanakangi', 'Vanaspati']);
         } else if ((selectedHour! >= 11 && selectedHour! < 14) || (selectedHour! == 14 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Khamaj', 'Saranga']);
+          recommendedRaagas.addAll(['Manavati']);
         } else if ((selectedHour! >= 14 && selectedHour! < 17) || (selectedHour! == 17 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Yaman', 'Bhimpalasi']);
+          recommendedRaagas.addAll(['Hanumatodi', 'Vanaspati', 'Manavati']);
         } else if ((selectedHour! >= 17 && selectedHour! < 20) || (selectedHour! == 20 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Puriya Kalyan', 'Marwa']);
+          recommendedRaagas.addAll(['Gayakapriya', 'Kanakangi']);
         } else {
-          recommendedRaagas.addAll(['Darbari Kanada', 'Malkauns']);
+          recommendedRaagas.addAll(['Kanakangi', 'Hanumatodi', 'Gayakapriya', 'Vanaspati']);
         }
       } else {
         recommendedRaagas.add('Please select a valid time.');
       }
     });
+  }
+
+  void _handleRaagaClick(String raaga) {
+    // Implement what happens when a raaga is clicked
+    print('Raaga "$raaga" clicked!');
+    // You might want to navigate to a details screen or play the raaga here.
   }
 
   @override
@@ -275,39 +281,45 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                     width: 1,
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/Image2.png',
-                            width: 26,
-                            height: 26,
-                            fit: BoxFit.fitWidth,
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/Image2.png',
+                          width: 26,
+                          height: 26,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        const SizedBox(width: 16),
+                        const Text(
+                          'Melodies for This Moment',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Color.fromRGBO(92, 2, 2, 1),
+                            fontFamily: 'Inter',
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            height: 1,
                           ),
-                          const SizedBox(width: 16),
-                          const Text(
-                            'Melodies for This Moment',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Color.fromRGBO(92, 2, 2, 1),
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              height: 1,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    if (recommendedRaagas.isNotEmpty)
+                      Column( // Display raagas as a column
+                        crossAxisAlignment: CrossAxisAlignment.stretch, // Make each container take full width
+                        children: recommendedRaagas.map((raaga) => GestureDetector(
+                          onTap: () => _handleRaagaClick(raaga),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 4.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: const Color.fromRGBO(106, 24, 5, 0.2), // Slightly transparent background
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      if (recommendedRaagas.isNotEmpty)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: recommendedRaagas.map((raaga) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -316,7 +328,7 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                                   style: const TextStyle(
                                     color: Color.fromRGBO(92, 2, 2, 1),
                                     fontFamily: 'Inter',
-                                    fontSize: 22,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.normal,
                                     height: 1,
                                   ),
@@ -326,25 +338,25 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                                   style: TextStyle(
                                     color: Color.fromRGBO(105, 23, 5, 1),
                                     fontFamily: 'Inter',
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.normal,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                     height: 1,
                                   ),
                                 ),
                               ],
                             ),
-                          )).toList(),
-                        )
-                      else
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            'Please select a time and click Recommend.',
-                            style: TextStyle(color: Colors.grey),
                           ),
+                        )).toList(),
+                      )
+                    else
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Please select a time and click Recommend.',
+                          style: TextStyle(color: Colors.grey),
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               ),
             ),
