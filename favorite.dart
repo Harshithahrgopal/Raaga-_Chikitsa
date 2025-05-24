@@ -1,29 +1,23 @@
 // Figma Flutter Generator Favoriteplaylist - FRAME
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:provider/provider.dart'; // Import provider
 
 import 'home.dart'; // Import the home.dart file
+import 'favorites_provider.dart'; // Import the FavoritesProvider
 
-class Favoriteplaylist extends StatefulWidget { // Changed to StatefulWidget
+class Favoriteplaylist extends StatelessWidget { // Changed to StatelessWidget
   final String commonImagePath = 'assets/Image4.png';
 
-  @override
-  State<Favoriteplaylist> createState() => _FavoriteplaylistState();
-}
-
-class _FavoriteplaylistState extends State<Favoriteplaylist> {
-  final List<String> favoriteRaagas = [
-    'Natakapriya',
-    'Roopavathi',
-    'Gayakapriya',
-    'Dhenuka',
-    'Ganamurti',
-  ];
+  const Favoriteplaylist({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    final favoritesProvider = Provider.of<FavoritesProvider>(context);
+    final favoriteRaagas = favoritesProvider.favoriteRaagas;
 
     // Define scaling factors based on the original design (390x844)
     final widthScaleFactor = screenWidth / 390;
@@ -50,7 +44,7 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
               child: Container(
                 width: 390 * widthScaleFactor,
                 height: 69 * heightScaleFactor,
-                color: Color(0xE0D48D66),
+                color: const Color(0xE0D48D66),
               ),
             ),
             Padding(
@@ -73,12 +67,12 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
                   Text(
                     'Favorite Raagas',
                     style: TextStyle(
-                      color: Color(0xFF5C0202),
+                      color: const Color(0xFF5C0202),
                       fontFamily: 'Inter',
                       fontSize: 24 * textScaleFactor,
                     ),
                   ),
-                  Spacer(), // Push the logo to the right
+                  const Spacer(), // Push the logo to the right
                   Image.asset(
                     'assets/ragachikitsalogo.png',
                     width: 35 * widthScaleFactor,
@@ -95,7 +89,7 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
               child: Text(
                 'My Healing Melodies',
                 style: TextStyle(
-                  color: Color(0xFF5C0202),
+                  color: const Color(0xFF5C0202),
                   fontFamily: 'Inter',
                   fontSize: 22 * textScaleFactor,
                 ),
@@ -107,7 +101,7 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
               child: Text(
                 ' Relax,heal and revisit the melodies that moved you',
                 style: TextStyle(
-                  color: Color(0xCACA1805),
+                  color: const Color(0xCACA1805),
                   fontFamily: 'Inter',
                   fontSize: 12 * textScaleFactor,
                 ),
@@ -123,9 +117,7 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
                       child: _buildRaagaRow(
                         leftText: favoriteRaagas[i],
                         onRemove: () {
-                          setState(() {
-                            favoriteRaagas.removeAt(i);
-                          });
+                          favoritesProvider.removeRaaga(favoriteRaagas[i]);
                         },
                         widthScaleFactor: widthScaleFactor,
                         heightScaleFactor: heightScaleFactor,
@@ -161,7 +153,7 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
               height: 44 * heightScaleFactor,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12 * math.min(widthScaleFactor, heightScaleFactor)),
-                color: Color(0xFFD48D66),
+                color: const Color(0xFFD48D66),
               ),
             ),
           ),
@@ -171,19 +163,19 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
             child: Text(
               leftText,
               style: TextStyle(
-                color: Color(0xFF5C0202),
+                color: const Color(0xFF5C0202),
                 fontFamily: 'Inter',
                 fontSize: 24 * textScaleFactor,
               ),
             ),
           ),
           Positioned( // The right arrow inside the box
-            top: 13 * heightScaleFactor,
+            top: 4 * heightScaleFactor,
             left: 277 * widthScaleFactor, // Position inside the box
-            child: Text(
+            child: Text( // Removed 'const' here
               '>',
               style: TextStyle(
-                color: Color(0xFF691705),
+                color: const Color(0xFF691705),
                 fontFamily: 'Inter',
                 fontSize: 25 * textScaleFactor,
               ),
@@ -197,7 +189,7 @@ class _FavoriteplaylistState extends State<Favoriteplaylist> {
               child: SizedBox(
                 width: 30 * widthScaleFactor,
                 height: 30 * heightScaleFactor,
-                child: Image.asset(widget.commonImagePath, fit: BoxFit.fitWidth),
+                child: Image.asset(commonImagePath, fit: BoxFit.fitWidth),
               ),
             ),
           ),
