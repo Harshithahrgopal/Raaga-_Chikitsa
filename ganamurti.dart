@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
+import 'package:marquee/marquee.dart';
 
 import 'favorites_provider.dart';
 
@@ -294,9 +295,22 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
                 ),
                 const SizedBox(height: 1),
                 Center(
-                  child: Text(
-                    'Ganamurthi($currentAudioIndex).wav',
-                    style: const TextStyle(color: brown, fontSize: 14, fontWeight: FontWeight.w500),
+                  child: SizedBox(
+                    height: 20,
+                    width: 250,
+                    child: Marquee(
+                      text: 'Ganamurthi($currentAudioIndex).wav',
+                      style: const TextStyle(color: brown, fontSize: 14, fontWeight: FontWeight.w500),
+                      scrollAxis: Axis.horizontal,
+                      blankSpace: 30.0,
+                      velocity: 30.0,
+                      pauseAfterRound: Duration(seconds: 1),
+                      startPadding: 10.0,
+                      accelerationDuration: Duration(seconds: 1),
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: Duration(milliseconds: 500),
+                      decelerationCurve: Curves.easeOut,
+                    ),
                   ),
                 ),
               ],
