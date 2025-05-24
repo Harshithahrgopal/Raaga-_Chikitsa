@@ -209,17 +209,20 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     await audioPlayer.resume();
                   },
                 ),
-                IconButton(
-                  icon: Image.asset('assets/Icons8last482.png', width: 30),
-                  onPressed: () async {
-                    if (currentAudioIndex > 1) {
-                      currentAudioIndex--;
-                      await setAudioByIndex(currentAudioIndex);
-                      await audioPlayer.resume();
-                    } else {
-                      print('Already at the first audio file.');
-                    }
-                  },
+                Transform.rotate(
+                  angle: math.pi,
+                  child: IconButton(
+                    icon: Image.asset('assets/Icons8last481.png', width: 30), // Next Button (Rotated)
+                    onPressed: () async {
+                      if (currentAudioIndex < totalAudios) {
+                        currentAudioIndex++;
+                        await setAudioByIndex(currentAudioIndex);
+                        await audioPlayer.resume();
+                      } else {
+                        print('No more audio files.');
+                      }
+                    },
+                  ),
                 ),
                 IconButton(
                   icon: Icon(
@@ -242,20 +245,17 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     }
                   },
                 ),
-                Transform.rotate(
-                  angle: math.pi,
-                  child: IconButton(
-                    icon: Image.asset('assets/Icons8last481.png', width: 30),
-                    onPressed: () async {
-                      if (currentAudioIndex < totalAudios) {
-                        currentAudioIndex++;
-                        await setAudioByIndex(currentAudioIndex);
-                        await audioPlayer.resume();
-                      } else {
-                        print('No more audio files.');
-                      }
-                    },
-                  ),
+                IconButton(
+                  icon: Image.asset('assets/Icons8last481.png', width: 30), // Previous Button
+                  onPressed: () async {
+                    if (currentAudioIndex > 1) {
+                      currentAudioIndex--;
+                      await setAudioByIndex(currentAudioIndex);
+                      await audioPlayer.resume();
+                    } else {
+                      print('Already at the first audio file.');
+                    }
+                  },
                 ),
                 IconButton(
                   icon: Image.asset('assets/Icons8add481.png', width: 35),
