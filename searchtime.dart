@@ -73,16 +73,19 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                 width: 390,
                 height: 69,
                 decoration: const BoxDecoration(
-                  color: Color.fromRGBO(212, 141, 102, 0.95),
+                  color: Color.fromRGBO(212, 141, 102, 1),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(
-                      'assets/arrow_left.png',
-                      semanticLabel: 'arrow_left',
-                      height: 24,
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Image.asset(
+                        'assets/arrow_left.png',
+                        semanticLabel: 'arrow_left',
+                        height: 24,
+                      ),
                     ),
                     const Text(
                       'Search By Time',
@@ -99,8 +102,8 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                       child: Image.asset(
                         'assets/ragachikitsalogo.png',
                         semanticLabel: 'ragachikitsalogo',
-                        height: 30,
-                        width: 30,
+                        height: 50,
+                        width: 50,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -207,20 +210,37 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                   ),
                   value: selectedMinute,
                   hint: const Text('MM', textAlign: TextAlign.center),
-                  items: List.generate(60, (index) => DropdownMenuItem(
-                    value: index,
-                    child: Text(
-                      index < 10 ? '0$index' : '$index',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color.fromRGBO(92, 2, 2, 1),
-                        fontFamily: 'Roboto',
-                        fontSize: 24,
-                        fontWeight: FontWeight.normal,
-                        height: 1,
+                  items: [
+                    for (int i = 0; i <= 50; i +=5)
+                      DropdownMenuItem(
+                        value: i,
+                        child: Text(
+                          i < 10 ? '0$i' : '$i',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(92, 2, 2, 1),
+                            fontFamily: 'Roboto',
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    const DropdownMenuItem(
+                      value: 59, // To include the 60th minute as '59' in the UI
+                      child: Text(
+                        '59',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromRGBO(92, 2, 2, 1),
+                          fontFamily: 'Roboto',
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
                       ),
                     ),
-                  )),
+                  ],
                   onChanged: (value) {
                     setState(() {
                       selectedMinute = value;
@@ -309,8 +329,8 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                     ),
                     const SizedBox(height: 16),
                     if (recommendedRaagas.isNotEmpty)
-                      Column( // Display raagas as a column
-                        crossAxisAlignment: CrossAxisAlignment.stretch, // Make each container take full width
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: recommendedRaagas.map((raaga) => GestureDetector(
                           onTap: () => _handleRaagaClick(raaga),
                           child: Container(
@@ -318,7 +338,7 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              color: const Color.fromRGBO(106, 24, 5, 0.2), // Slightly transparent background
+                              color: const Color.fromRGBO(106, 24, 5, 0.2),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
