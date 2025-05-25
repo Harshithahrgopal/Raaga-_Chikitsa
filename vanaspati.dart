@@ -3,10 +3,16 @@ import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
+import 'package:marquee/marquee.dart';
 
 import 'favorites_provider.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
+const TextStyle commonTextStyle = TextStyle(
+  fontFamily: 'Inter',
+  color: brown,
+);
+const double commonSpacing = 9.0;
 
 class VanaspatiScreen extends StatefulWidget {
   const VanaspatiScreen({super.key});
@@ -151,9 +157,7 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
             ),
             Text(
               'Vanaspati Raaga',
-              style: TextStyle(
-                color: brown,
-                fontFamily: 'Inter',
+              style: commonTextStyle.copyWith(
                 fontSize: screenWidth * 0.06,
               ),
             ),
@@ -170,8 +174,8 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
       left: 16,
       right: 16,
       child: Container(
-        height: 220,
-        padding: const EdgeInsets.all(8),
+        height: 250,
+        padding: const EdgeInsets.all(commonSpacing),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(212, 141, 102, 0.38),
           border: Border.all(color: const Color.fromRGBO(212, 141, 102, 1)),
@@ -183,12 +187,10 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
             Row(
               children: [
                 Image.asset('assets/Image3.png', width: 22, height: 22),
-                const SizedBox(width: 10),
+                const SizedBox(width: commonSpacing),
                 Text(
                   'Vanaspati',
-                  style: TextStyle(
-                    color: brown,
-                    fontFamily: 'Inter',
+                  style: commonTextStyle.copyWith(
                     fontSize: screenWidth * 0.06,
                   ),
                 ),
@@ -211,7 +213,6 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     await audioPlayer.resume();
                   },
                 ),
-                // Swapped: Now "Next" image is shown for "Previous" button
                 GestureDetector(
                   onTap: () async {
                     if (currentAudioIndex > 1) {
@@ -248,7 +249,6 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                     }
                   },
                 ),
-                // Swapped: Now "Previous" image is shown for "Next" button
                 GestureDetector(
                   onTap: () async {
                     if (currentAudioIndex < totalAudios) {
@@ -264,31 +264,62 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
                 IconButton(
                   icon: Image.asset('assets/Icons8add481.png', width: 35),
                   onPressed: () {
-                    Provider.of<FavoritesProvider>(context, listen: false)
-                        .addRaaga('Vanaspati');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Vanaspati added to favorites!')),
-                    );
+                    final favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
+                    if (!favoritesProvider.favoriteRaagas.contains('Vanaspati')) {
+                      favoritesProvider.addRaaga('Vanaspati');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Vanaspati added to favorites!')),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Vanaspati is already in favorites.')),
+                      );
+                    }
                   },
                 ),
               ],
             ),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(formatTime(position), style: const TextStyle(color: brown, fontSize: 14)),
-                Expanded(
-                  child: Slider(
-                    activeColor: brown,
-                    inactiveColor: const Color.fromRGBO(212, 141, 102, 1),
-                    value: position.inSeconds.toDouble().clamp(0, (duration?.inSeconds.toDouble() ?? 0)),
-                    min: 0,
-                    max: duration?.inSeconds.toDouble() ?? 1,
-                    onChanged: (value) async {
-                      await audioPlayer.seek(Duration(seconds: value.toInt()));
-                    },
+                Row(
+                  children: [
+                    Text(formatTime(position), style: commonTextStyle.copyWith(fontSize: 14)),
+                    Expanded(
+                      child: Slider(
+                        activeColor: brown,
+                        inactiveColor: const Color.fromRGBO(212, 141, 102, 1),
+                        value: position.inSeconds.toDouble().clamp(0, (duration?.inSeconds.toDouble() ?? 0)),
+                        min: 0,
+                        max: duration?.inSeconds.toDouble() ?? 1,
+                        onChanged: (value) async {
+                          await audioPlayer.seek(Duration(seconds: value.toInt()));
+                        },
+                      ),
+                    ),
+                    Text(formatTime(duration ?? Duration.zero), style: commonTextStyle.copyWith(fontSize: 14)),
+                  ],
+                ),
+                const SizedBox(height: 1),
+                Center(
+                  child: SizedBox(
+                    height: 20,
+                    width: 250,
+                    child: Marquee(
+                      text: 'Vanaspati($currentAudioIndex).wav',
+                      style: commonTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                      scrollAxis: Axis.horizontal,
+                      blankSpace: 195.0,
+                      velocity: 30.0,
+                      pauseAfterRound: const Duration(seconds: 1),
+                      startPadding: 10.0,
+                      accelerationDuration: const Duration(seconds: 1),
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: const Duration(milliseconds: 500),
+                      decelerationCurve: Curves.easeOut,
+                    ),
                   ),
                 ),
-                Text(formatTime(duration ?? Duration.zero), style: const TextStyle(color: brown, fontSize: 14)),
               ],
             ),
           ],
@@ -299,13 +330,11 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
 
   Widget _buildBenefitsTitle(double screenWidth) {
     return Positioned(
-      top: 330,
+      top: 340,
       left: 16,
       child: Text(
         'Wellness Benefits',
-        style: TextStyle(
-          color: brown,
-          fontFamily: 'Inter',
+        style: commonTextStyle.copyWith(
           fontSize: screenWidth * 0.06,
         ),
       ),
@@ -329,19 +358,19 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Mental and Emotional Benefits:', style: TextStyle(color: brown, fontSize: screenWidth * 0.05)),
-              const SizedBox(height: 8),
-              _buildBenefitRow('Balances mood swings and scattered thoughts.'),
-              _buildBenefitRow('Supports emotional grounding and inner stability.'),
-              _buildBenefitRow('Useful for meditation and quiet reflection.'),
-              _buildBenefitRow('Stimulates mental alertness without overstimulation.'),
-              const SizedBox(height: 16),
-              Text('Physical Health Benefits:', style: TextStyle(color: brown, fontSize: screenWidth * 0.05)),
-              const SizedBox(height: 8),
-              _buildBenefitRow('Prepares the body for rest and helps with mild insomnia.'),
-              _buildBenefitRow('Offers a gentle energy reset through sound resonance.'),
-              _buildBenefitRow('The calming effect can support parasympathetic nervous system activity.'),
-              _buildBenefitRow('The soothing tones can help reduce hypertension.'),
+              Text('Mental and Emotional Benefits:', style: commonTextStyle.copyWith(fontSize: screenWidth * 0.05)),
+              const SizedBox(height: commonSpacing),
+              _buildBenefitRow('Promotes a sense of stability and grounding.'),
+              _buildBenefitRow('Encourages patience and perseverance.'),
+              _buildBenefitRow('Aids in reducing anxiety and worry.'),
+              _buildBenefitRow('Fosters a feeling of inner strength.'),
+              const SizedBox(height: commonSpacing * 2),
+              Text('Physical Health Benefits:', style: commonTextStyle.copyWith(fontSize: screenWidth * 0.05)),
+              const SizedBox(height: commonSpacing),
+              _buildBenefitRow('Supports bone health and strength.'),
+              _buildBenefitRow('May assist in regulating blood pressure.'),
+              _buildBenefitRow('Can improve stamina and endurance.'),
+              _buildBenefitRow('Potentially beneficial for lower body strength.'),
             ],
           ),
         ),
@@ -368,13 +397,13 @@ class _VanaspatiScreenState extends State<VanaspatiScreen> {
 
   static Widget _buildBenefitRow(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: commonSpacing / 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(width: 8, height: 8, decoration: const BoxDecoration(color: brown, shape: BoxShape.circle)),
-          const SizedBox(width: 8),
-          Expanded(child: Text(text, style: const TextStyle(color: brown, fontSize: 16))),
+          const SizedBox(width: commonSpacing),
+          Expanded(child: Text(text, style: commonTextStyle)),
         ],
       ),
     );
