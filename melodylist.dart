@@ -5,12 +5,12 @@ import 'ganamurti.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(212, 141, 102, 1);
-const raagaDivColor = Color.fromRGBO(212, 141, 102, 1); // D48D66 in RGB
+const raagaDivColor = Color.fromRGBO(212, 141, 102, 0.7); // D48D66 in RGB
 const arrowBrown = Color.fromRGBO(105, 23, 5, 1);
 const borderRadiusAll = BorderRadius.all(Radius.circular(15));
 final BorderRadius itemRadius = BorderRadius.circular(12);
 const itemHeight = 44.0;
-const dividerHeight = 8.0;
+const dividerHeight = 6.5; // Increased divider height for more space
 
 const titleStyle = TextStyle(
   color: brown,
@@ -51,8 +51,8 @@ class MelodyList extends StatelessWidget {
         decoration: const BoxDecoration(
           borderRadius: borderRadiusAll,
           gradient: LinearGradient(
-            begin: Alignment(0, 0),
-            end: Alignment(0, 1),
+            begin: Alignment(0, 1), // Changed begin alignment
+            end: Alignment(0, 0),   // Changed end alignment
             colors: [Color(0xFFFFbc97), Color(0xFFFFf1db)],
           ),
         ),
@@ -85,8 +85,8 @@ class MelodyList extends StatelessWidget {
                     ),
                     const Text('Melody List', style: titleStyle),
                     SizedBox(
-                      width: 30,
-                      height: 30,
+                      width: 45,
+                      height: 45,
                       child: ClipOval(
                         child: Image.asset(
                           'assets/ragachikitsalogo.png',
@@ -100,14 +100,14 @@ class MelodyList extends StatelessWidget {
             ),
             // Melody Items
             Positioned(
-              top: 80,
+              top: 85,
               left: 20,
               right: 20,
               child: Column(
                 children: [
                   _buildMelodyItem(context, 'Kanakangi'),
                   const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'ratnangi'),
+                  _buildMelodyItem(context, 'Ratnangi'),
                   const SizedBox(height: dividerHeight),
                   _buildMelodyItem(context, 'Ganamurti'),
                   const SizedBox(height: dividerHeight),
@@ -140,35 +140,38 @@ class MelodyList extends StatelessWidget {
   }
 
   Widget _buildMelodyItem(BuildContext context, String melodyName) {
-    return GestureDetector(
-      onTap: () {
-        if (melodyName == 'Vanaspati') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const VanaspatiScreen()),
-          );
-        } else if (melodyName == 'Ganamurti') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const GanamurtiScreen()),
-          );
-        }
-        // Add more navigation cases here as needed
-      },
-      child: Container(
-        width: double.infinity,
-        height: itemHeight,
-        decoration: BoxDecoration(
-          borderRadius: itemRadius,
-          color: raagaDivColor,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(melodyName, style: itemTextStyle),
-            const Text('>', style: arrowTextStyle),
-          ],
+    return Padding( // Wrap each item with Padding for spacing
+      padding: const EdgeInsets.only(bottom: dividerHeight),
+      child: GestureDetector(
+        onTap: () {
+          if (melodyName == 'Vanaspati') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const VanaspatiScreen()),
+            );
+          } else if (melodyName == 'Ganamurti') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const GanamurthiScreen()),
+            );
+          }
+          // Add more navigation cases here as needed
+        },
+        child: Container(
+          width: double.infinity,
+          height: itemHeight,
+          decoration: BoxDecoration(
+            borderRadius: itemRadius,
+            color: raagaDivColor,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 22.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(melodyName, style: itemTextStyle),
+              const Text('>', style: arrowTextStyle),
+            ],
+          ),
         ),
       ),
     );
