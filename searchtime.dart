@@ -118,9 +118,9 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                 'Raaga Time Recommender',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  color: Color.fromRGBO(92, 2, 2, 1),
+                  color: Color.fromRGBO(92, 2, 2, 2),
                   fontFamily: 'Inter',
-                  fontSize: 22,
+                  fontSize: 24,
                   fontWeight: FontWeight.normal,
                   height: 1,
                 ),
@@ -258,7 +258,7 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                   width: 124,
                   height: 37,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(28),
                     boxShadow: const [
                       BoxShadow(
                         color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -294,11 +294,11 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
               child: Container(
                 width: 349,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromRGBO(212, 141, 102, 0.15),
+                  borderRadius: BorderRadius.circular(25),
+                  color: const Color.fromRGBO(212, 141, 102, 0.25),
                   border: Border.all(
                     color: const Color.fromRGBO(212, 141, 102, 1),
-                    width: 1,
+                    width: 1.8,
                   ),
                 ),
                 padding: const EdgeInsets.all(16.0),
@@ -318,7 +318,7 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                           'Melodies for This Moment',
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                            color: Color.fromRGBO(92, 2, 2, 1),
+                            color: Color.fromRGBO(92, 2, 2, 2),
                             fontFamily: 'Inter',
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
@@ -334,11 +334,11 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                         children: recommendedRaagas.map((raaga) => GestureDetector(
                           onTap: () => _handleRaagaClick(raaga),
                           child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 4.0),
+                            margin: const EdgeInsets.symmetric(vertical: 8.0), // Increased vertical margin
                             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              color: const Color.fromRGBO(106, 24, 5, 0.2),
+                              color: const Color(0xFFD48D66).withOpacity(0.6),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -348,9 +348,9 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
                                   style: const TextStyle(
                                     color: Color.fromRGBO(92, 2, 2, 1),
                                     fontFamily: 'Inter',
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.normal,
-                                    height: 1,
+                                    height: 1.5,
                                   ),
                                 ),
                                 const Text(
