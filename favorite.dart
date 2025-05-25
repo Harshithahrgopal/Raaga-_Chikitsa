@@ -153,7 +153,7 @@ class Favoriteplaylist extends StatelessWidget { // Changed to StatelessWidget
               height: 44 * heightScaleFactor,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12 * math.min(widthScaleFactor, heightScaleFactor)),
-                color: const Color(0xFFD48D66),
+                color: const Color(0xFFD48D66).withOpacity(0.6),
               ),
             ),
           ),
