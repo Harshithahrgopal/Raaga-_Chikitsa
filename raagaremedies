@@ -4,7 +4,6 @@ const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(105, 23, 5, 1);
 const darkBorderColor = Color(0xFFD48D66);
 const veryLightBrownContainerColor = Color(0xFFF5E0C3); // A very light shade of brown
-const lightBrownContainerColor = Color(0xFFE0C8A9); // Light brown for the main container
 
 class RaagaRemediesScreen extends StatefulWidget {
   const RaagaRemediesScreen({super.key});
@@ -33,17 +32,22 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
   ];
 
   final Map<String, List<String>> _raagaRemedies = {
-    'Sleep & Relaxation Disorders':['Ganamurti', 'Vanaspati', 'Natabhairavi', 'Pavani'],
-    'Stress & Anxiety':['Tanaroopi', 'Senavati', 'Mayamalavagowla', 'Vachaspathi'],
+    'Sleep & Relaxation Disorders': ['Ganamurti', 'Vanaspati', 'Natabhairavi', 'Pavani'],
+    'Stress & Anxiety': ['Tanaroopi', 'Senavati', 'Mayamalavagowla', 'Vachaspathi'],
     'Hypertension & High Blood Pressure': ['Keeravani', 'Chalanata', 'Ragavardhini', 'Hemavati'],
-    'Respiratory Issues (Asthma, Breathing Difficulties)':['Ratnangi', 'Charukesi', 'Jhalavarali', 'Dhavalambari'],
-    'Fatigue & Lack of Energy':['Manavati', 'Chayavati', 'Vagadhishvari', 'Bhavapriya'],
-    'Digestive Disorders':['Natakapriya', 'Chakravakam', 'Mararanjani', 'Raganarayani'],
+    'Respiratory Issues (Asthma, Breathing Difficulties)': [
+      'Ratnangi',
+      'Charukesi',
+      'Jhalavarali',
+      'Dhavalambari'
+    ],
+    'Fatigue & Lack of Energy': ['Manavati', 'Chayavati', 'Vagadhishvari', 'Bhavapriya'],
+    'Digestive Disorders': ['Natakapriya', 'Chakravakam', 'Mararanjani', 'Raganarayani'],
     'Meditation & Mental Clarity': ['Rupavati', 'Naganandini', 'Dhunibinnashadjam', 'Rasikapriya'],
-    'Heart & Emotional Healing':['Gayakapriya', 'Kharaharapriya', 'Namanarayani', 'Latangi'],
-    'Anger & Irritability':['Hanumatodi', 'Vakulabharanam', 'Yagapriya', 'Shamalangi'],
-    'Headache & Migraine':['Kokilapriya', 'Varunapriya', 'Shadvidamargini', 'Simhendramadhyamam'],
-    'Depression & Mood Swings':['Kanakangi', 'Jhankaradhvani', 'Dheerasankarabharanam', 'Gavambodhi'],
+    'Heart & Emotional Healing': ['Gayakapriya', 'Kharaharapriya', 'Namanarayani', 'Latangi'],
+    'Anger & Irritability': ['Hanumatodi', 'Vakulabharanam', 'Yagapriya', 'Shamalangi'],
+    'Headache & Migraine': ['Kokilapriya', 'Varunapriya', 'Shadvidamargini', 'Simhendramadhyamam'],
+    'Depression & Mood Swings': ['Kanakangi', 'Jhankaradhvani', 'Dheerasankarabharanam', 'Gavambodhi'],
     // Add more mappings for other problems
   };
 
@@ -54,26 +58,28 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: brown.withOpacity(0.7), // Brown background for each item
+        color: brown.withOpacity(0.5), // Brown background for each item
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            name,
-            style: const TextStyle(
-              color: veryLightBrownContainerColor, // Very light brown text
-              fontFamily: 'Inter',
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
+          Expanded(
+            child: Text(
+              name,
+              style: const TextStyle(
+                color: veryLightBrownContainerColor, // Very light brown text
+                fontFamily: 'Inter',
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+              ),
             ),
           ),
           const Text(
             '>',
             style: TextStyle(
               color: veryLightBrownContainerColor,
-              fontSize: 25,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -88,7 +94,8 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
       _showRaagaContainer = true; // Set the flag to show the container
       if (_currentRaagas.isEmpty && _selectedProblem != null) {
         // Optionally handle cases where there are no specific raagas for a problem
-        _currentRaagas = _raagaRemedies['General Wellness']!;
+        // You might want to display a message or have a default list.
+        _currentRaagas = ['No specific raagas found.']; // Example fallback
       }
     });
   }
@@ -143,7 +150,8 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    Image.asset('assets/ragachikitsalogo.png', width: screenWidth * 0.09, height: screenHeight * 0.05),
+                    Image.asset('assets/ragachikitsalogo.png',
+                        width: screenWidth * 0.09, height: screenHeight * 0.05),
                   ],
                 ),
               ),
@@ -156,7 +164,7 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                 style: TextStyle(
                   color: brown,
                   fontFamily: 'Inter',
-                  fontSize: screenWidth * 0.045,
+                  fontSize: screenWidth * 0.065,
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -165,7 +173,7 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
               top: screenHeight * 0.18,
               left: screenWidth * 0.07,
               child: Container(
-                width: screenWidth * 0.86,
+                width: (screenWidth * 0.86).round().toDouble(), // Rounded width
                 height: screenHeight * 0.065,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -173,33 +181,42 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                   color: const Color(0xFFFFF1DB),
                   border: Border.all(color: const Color(0xFF6A1805), width: 2),
                 ),
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Select your symptom or feeling',
-                    hintStyle: const TextStyle(
-                      color: Color(0xCACA1805),
-                      fontFamily: 'Inter',
-                      fontSize: 16,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Select your symptom or feeling',
+                          hintStyle: TextStyle(
+                            color: Color(0xCACA1805),
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                          ),
+                        ),
+                        value: _selectedProblem,
+                        items: _problems.map((problem) {
+                          return DropdownMenuItem<String>(
+                            value: problem,
+                            child: Text(
+                              problem,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedProblem = newValue;
+                          });
+                        },
+                        icon: SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: Image.asset('assets/Image9.png'),
+                        ),
+                      ),
                     ),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Image.asset('assets/Image9.png', width: 24, height: 24),
-                    ),
-                  ),
-                  value: _selectedProblem,
-                  items: _problems.map((problem) {
-                    return DropdownMenuItem<String>(
-                      value: problem,
-                      child: Text(problem),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedProblem = newValue;
-                    });
-                  },
-                  icon: const SizedBox.shrink(), // Remove the default dropdown arrow
+                  ],
                 ),
               ),
             ),
@@ -210,7 +227,9 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                 onPressed: _getRaagasForProblem, // Call the function to update raagas and show container
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(212, 141, 102, 0.59),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24), side: const BorderSide(color: Color(0xFF6A1805), width: 3)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      side: const BorderSide(color: Color(0xFF6A1805), width: 3)),
                   elevation: 4,
                 ),
                 child: Text(
@@ -234,7 +253,7 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: lightBrownContainerColor.withOpacity(0.8), // Light brown container background
+                    color: brown.withOpacity(0.03), // Healing Raagas container is now brown
                     border: Border.all(color: darkBorderColor, width: 2), // Border color
                   ),
                   child: Column(
@@ -243,14 +262,14 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           children: [
-                            const Icon(Icons.music_note, color: brown, size: 26),
+                            const Icon(Icons.music_note, color: brown, size: 28),
                             const SizedBox(width: 10),
                             Text(
                               'Healing Raagas',
                               style: TextStyle(
                                 color: brown,
                                 fontFamily: 'Inter',
-                                fontSize: screenWidth * 0.05,
+                                fontSize: screenWidth * 0.06,
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
