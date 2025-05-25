@@ -8,6 +8,11 @@ import 'package:marquee/marquee.dart';
 import 'favorites_provider.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
+const TextStyle commonTextStyle = TextStyle(
+  fontFamily: 'Inter',
+  color: brown,
+);
+const double commonSpacing = 9.0;
 
 class GanamurthiScreen extends StatefulWidget {
   const GanamurthiScreen({super.key});
@@ -152,9 +157,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
             ),
             Text(
               'Ganamurthi Raaga',
-              style: TextStyle(
-                color: brown,
-                fontFamily: 'Inter',
+              style: commonTextStyle.copyWith(
                 fontSize: screenWidth * 0.06,
               ),
             ),
@@ -172,7 +175,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
       right: 16,
       child: Container(
         height: 250,
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(commonSpacing),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(212, 141, 102, 0.38),
           border: Border.all(color: const Color.fromRGBO(212, 141, 102, 1)),
@@ -184,12 +187,10 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
             Row(
               children: [
                 Image.asset('assets/Image3.png', width: 22, height: 22),
-                const SizedBox(width: 10),
+                const SizedBox(width: commonSpacing),
                 Text(
                   'Ganamurthi',
-                  style: TextStyle(
-                    color: brown,
-                    fontFamily: 'Inter',
+                  style: commonTextStyle.copyWith(
                     fontSize: screenWidth * 0.06,
                   ),
                 ),
@@ -285,7 +286,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
               children: [
                 Row(
                   children: [
-                    Text(formatTime(position), style: const TextStyle(color: brown, fontSize: 14)),
+                    Text(formatTime(position), style: commonTextStyle.copyWith(fontSize: 14)),
                     Expanded(
                       child: Slider(
                         activeColor: brown,
@@ -298,7 +299,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
                         },
                       ),
                     ),
-                    Text(formatTime(duration ?? Duration.zero), style: const TextStyle(color: brown, fontSize: 14)),
+                    Text(formatTime(duration ?? Duration.zero), style: commonTextStyle.copyWith(fontSize: 14)),
                   ],
                 ),
                 const SizedBox(height: 1),
@@ -308,15 +309,15 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
                     width: 250,
                     child: Marquee(
                       text: 'Ganamurthi($currentAudioIndex).wav',
-                      style: const TextStyle(color: brown, fontSize: 14, fontWeight: FontWeight.w500),
+                      style: commonTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
                       scrollAxis: Axis.horizontal,
                       blankSpace: 195.0,
                       velocity: 30.0,
-                      pauseAfterRound: Duration(seconds: 1),
+                      pauseAfterRound: const Duration(seconds: 1),
                       startPadding: 10.0,
-                      accelerationDuration: Duration(seconds: 1),
+                      accelerationDuration: const Duration(seconds: 1),
                       accelerationCurve: Curves.linear,
-                      decelerationDuration: Duration(milliseconds: 500),
+                      decelerationDuration: const Duration(milliseconds: 500),
                       decelerationCurve: Curves.easeOut,
                     ),
                   ),
@@ -335,9 +336,7 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
       left: 16,
       child: Text(
         'Wellness Benefits',
-        style: TextStyle(
-          color: brown,
-          fontFamily: 'Inter',
+        style: commonTextStyle.copyWith(
           fontSize: screenWidth * 0.06,
         ),
       ),
@@ -361,15 +360,15 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Mental and Emotional Benefits:', style: TextStyle(color: brown, fontSize: screenWidth * 0.05)),
-              const SizedBox(height: 8),
+              Text('Mental and Emotional Benefits:', style: commonTextStyle.copyWith(fontSize: screenWidth * 0.05)),
+              const SizedBox(height: commonSpacing),
               _buildBenefitRow('Improves mental clarity and concentration.'),
               _buildBenefitRow('Energizes the mind and elevates focus.'),
               _buildBenefitRow('Boosts confidence and assertiveness.'),
               _buildBenefitRow('Helps overcome mental fatigue and lethargy.'),
-              const SizedBox(height: 16),
-              Text('Physical Health Benefits:', style: TextStyle(color: brown, fontSize: screenWidth * 0.05)),
-              const SizedBox(height: 8),
+              const SizedBox(height: commonSpacing * 2),
+              Text('Physical Health Benefits:', style: commonTextStyle.copyWith(fontSize: screenWidth * 0.05)),
+              const SizedBox(height: commonSpacing),
               _buildBenefitRow('Enhances energy circulation in the body.'),
               _buildBenefitRow('Improves metabolism and digestion.'),
               _buildBenefitRow('Beneficial for respiratory health.'),
@@ -400,13 +399,13 @@ class _GanamurthiScreenState extends State<GanamurthiScreen> {
 
   static Widget _buildBenefitRow(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: commonSpacing / 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(width: 8, height: 8, decoration: const BoxDecoration(color: brown, shape: BoxShape.circle)),
-          const SizedBox(width: 8),
-          Expanded(child: Text(text, style: const TextStyle(color: brown))),
+          const SizedBox(width: commonSpacing),
+          Expanded(child: Text(text, style: commonTextStyle)),
         ],
       ),
     );
