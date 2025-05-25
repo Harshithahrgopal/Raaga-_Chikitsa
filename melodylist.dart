@@ -10,7 +10,7 @@ const arrowBrown = Color.fromRGBO(105, 23, 5, 1);
 const borderRadiusAll = BorderRadius.all(Radius.circular(15));
 final BorderRadius itemRadius = BorderRadius.circular(12);
 const itemHeight = 44.0;
-const dividerHeight = 6.5; // Increased divider height for more space
+const dividerHeight = 9.5; // Increased divider height for more space
 
 const titleStyle = TextStyle(
   color: brown,
@@ -41,6 +41,22 @@ const arrowTextStyle = TextStyle(
 
 class MelodyList extends StatelessWidget {
   const MelodyList({super.key});
+
+  final List<String> _melaKarthaRaagas = const [
+    'Kanakangi', 'Ratnangi', 'Ganamurti', 'Vanaspati', 'Manavati', 'Tanarupi', 'Senavati',
+    'Hanumatodi', 'Dhenuka', 'Natakapriya', 'Kokilapriya', 'Rupavati', 'Gayakapriya', 'Vakulabharanam',
+    'Mayamalavagowla', 'Chakravakam', 'Suryakantam', 'Hatakambari', 'Jhankaradhwani', 'Natabhairavi', 'Keeravani',
+    'Kharaharapriya', 'Gaurimanohari', 'Varunapriya', 'Mararanjani', 'Charukesi', 'Sarasangi', 'Harikambhoji',
+    'Shankarabharanam', 'Nata', 'Kalyani', 'Yaman', 'Hindolam', 'Mohanam', 'Kambhoji',
+    'Ramapriya', 'Gamanshramam', 'Vishnupriya', 'Nalinakanti', 'Navaneetam', 'Pavani', 'Raghupriya',
+    'Gavambodhi', 'Bhavapriya', 'Shubhapantuvarali', 'Shadvidamargini', 'Suvarnangi', 'Divyamani', 'Dhavalambari',
+    'Namagiri', 'Panthuvarali', 'Neelambari', 'Yagapriya', 'Ragavardhini', 'Gangeyabhushani', 'Vagadheeswari',
+    'Shulini', 'Chalanata', 'Salagam', 'Jalarnavam', 'Jhalavarali', 'Navaragamalika', 'Rasikapriya',
+    'Gamanashrama', 'Shamukhapriya', 'Simhendramadhyamam', 'Hemavati', 'Dharmavati', 'Neetimati', 'Kantamani',
+    'Rishabhapriya', 'Latangi', 'Vachaspati', 'Mechakalyani', 'Chitrambari', 'Sucharitra', 'Jyotiswarupini',
+    'Dhatuvardhani', 'Nasikabhushani', 'Kosalam', 'Rasali', 'Rupavati', 'Madhyamavati', 'Purvi',
+    'Kafi', 'Bhairavi', 'Jonpuri', 'Todi', 'Multani', 'Darbari Kanada', 'Malkauns',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -103,34 +119,17 @@ class MelodyList extends StatelessWidget {
               top: 85,
               left: 20,
               right: 20,
-              child: Column(
-                children: [
-                  _buildMelodyItem(context, 'Kanakangi'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Ratnangi'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Ganamurti'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Vanaspati'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Manavati'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Tanarupi'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Senavati'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Hanumatodi'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Dhenuka'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Natakapriya'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Kokilapriya'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Roopavathi'),
-                  const SizedBox(height: dividerHeight),
-                  _buildMelodyItem(context, 'Gayakapriya'),
-                ],
+              child: SingleChildScrollView( // Enables scrolling
+                child: Column(
+                  children: _melaKarthaRaagas.map((raagaName) {
+                    return Column(
+                      children: [
+                        _buildMelodyItem(context, raagaName),
+                        SizedBox(height: dividerHeight),
+                      ],
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ],
@@ -140,38 +139,35 @@ class MelodyList extends StatelessWidget {
   }
 
   Widget _buildMelodyItem(BuildContext context, String melodyName) {
-    return Padding( // Wrap each item with Padding for spacing
-      padding: const EdgeInsets.only(bottom: dividerHeight),
-      child: GestureDetector(
-        onTap: () {
-          if (melodyName == 'Vanaspati') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const VanaspatiScreen()),
-            );
-          } else if (melodyName == 'Ganamurti') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const GanamurthiScreen()),
-            );
-          }
-          // Add more navigation cases here as needed
-        },
-        child: Container(
-          width: double.infinity,
-          height: itemHeight,
-          decoration: BoxDecoration(
-            borderRadius: itemRadius,
-            color: raagaDivColor,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 22.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(melodyName, style: itemTextStyle),
-              const Text('>', style: arrowTextStyle),
-            ],
-          ),
+    return GestureDetector(
+      onTap: () {
+        if (melodyName == 'Vanaspati') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const VanaspatiScreen()),
+          );
+        } else if (melodyName == 'Ganamurti') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const GanamurthiScreen()),
+          );
+        }
+        // Add navigation cases for other raagas as needed
+      },
+      child: Container(
+        width: double.infinity,
+        height: itemHeight,
+        decoration: BoxDecoration(
+          borderRadius: itemRadius,
+          color: raagaDivColor,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 22.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(melodyName, style: itemTextStyle),
+            const Text('>', style: arrowTextStyle),
+          ],
         ),
       ),
     );
