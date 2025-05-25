@@ -73,11 +73,13 @@ class Favoriteplaylist extends StatelessWidget { // Changed to StatelessWidget
                     ),
                   ),
                   const Spacer(), // Push the logo to the right
-                  Image.asset(
-                    'assets/ragachikitsalogo.png',
-                    width: 35 * widthScaleFactor,
-                    height: 35 * heightScaleFactor,
-                    fit: BoxFit.contain,
+                  ClipOval( // Wrap the Image.asset with ClipOval
+                    child: Image.asset(
+                      'assets/ragachikitsalogo.png',
+                      width: 38 * widthScaleFactor,
+                      height: 38 * heightScaleFactor,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   SizedBox(width: 15 * widthScaleFactor), // Add some trailing space
                 ],
