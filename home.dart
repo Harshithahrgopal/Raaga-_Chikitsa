@@ -1,17 +1,52 @@
 import 'package:flutter/material.dart';
-import 'melodylist.dart'; // Import the melodylist.dart file
-import 'favorite.dart'; // Import the favorite.dart file
+import 'melodylist.dart';
+import 'favorite.dart';
 import 'raagarelief.dart';
-import 'searchtime.dart'; // Import the RaagaRemediesScreen
-import 'package:provider/provider.dart'; // Import provider
-import 'favorites_provider.dart'; // Import the FavoritesProvider
+import 'searchtime.dart';
+import 'package:provider/provider.dart';
+import 'favorites_provider.dart';
+import 'package:audioplayers/audioplayers.dart'; // Import the audioplayers package
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final AudioPlayer audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+
+  Future<void> playRaaga() async {
+    try {
+      await audioPlayer.play(AssetSource('audio/M4/M4(4).wav'));
+      setState(() {
+        isPlaying = true;
+      });
+    } catch (e) {
+      print('Error playing audio: $e');
+      setState(() {
+        isPlaying = false;
+      });
+    }
+  }
+
+  Future<void> stopRaaga() async {
+    await audioPlayer.stop();
+    setState(() {
+      isPlaying = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Define constants
     const Color brownColor = Color(0xFF5C0202);
     const Color lightBrownColor = Color(0xFF6A1805);
     const List<Color> orangeGradientColors = [
@@ -136,14 +171,17 @@ class HomePage extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    width: 35,
-                                    height: 35,
-                                    margin: const EdgeInsets.only(right: 9),
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/Image2.png'),
-                                        fit: BoxFit.fitWidth,
+                                  GestureDetector(
+                                    onTap: playRaaga, // Call playRaaga when the image is tapped
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      margin: const EdgeInsets.only(right: 9),
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage('assets/Image2.png'),
+                                          fit: BoxFit.fitWidth,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -152,49 +190,56 @@ class HomePage extends StatelessWidget {
                                     style: textStyle20,
                                   ),
                                   const Spacer(),
-                                  Container(
-                                    width: 35,
-                                    height: 35,
-                                    margin: const EdgeInsets.only(right: 4),
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/Icons8play501.png'),
-                                        fit: BoxFit.fitWidth,
+                                  GestureDetector(
+                                    onTap: isPlaying ? stopRaaga : playRaaga,
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      margin: const EdgeInsets.only(right: 4),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(isPlaying
+                                              ? 'assets/Icons8stop50.png' // You might want a stop icon
+                                              : 'assets/Icons8play501.png'),
+                                          fit: BoxFit.fitWidth,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              Positioned(
+                              const Positioned(
                                 top: 65,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 300,
                                       child: Text(
                                         '> Reduces stress and calms the mind.',
                                         style: textStyle13,
                                       ),
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 300,
                                       child: Text(
                                         '> Lowers heart rate and blood pressure.',
                                         style: textStyle13,
                                       ),
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 300,
                                       child: Text(
-                                          '> Promotes deep breathing and lung health.',
-                                          style: textStyle13),
+                                        '> Promotes deep breathing and lung health.',
+                                        style: textStyle13,
+                                      ),
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 300,
                                       child: Text(
-                                          '> Promotes emotional stability.',
-                                          style: textStyle13),
+                                        '> Promotes emotional stability.',
+                                        style: textStyle13,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -256,7 +301,7 @@ class HomePage extends StatelessWidget {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const Favoriteplaylist()), // Navigate to Favoriteplaylist
+                                MaterialPageRoute(builder: (context) => const Favoriteplaylist()),
                               );
                             },
                           ),
@@ -277,7 +322,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 40), // Add significant space before the bottom text
+                const SizedBox(height: 40),
                 const Padding(
                   padding: EdgeInsets.only(top: 20),
                   child: Column(
