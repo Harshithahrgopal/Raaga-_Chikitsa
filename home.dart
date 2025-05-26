@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'melodylist.dart'; // Import the melodylist.dart file
 import 'favorite.dart'; // Import the favorite.dart file
-import 'raagarelief.dart'; // Import the RaagaRemediesScreen
+import 'raagarelief.dart';
+import 'searchtime.dart'; // Import the RaagaRemediesScreen
+import 'package:provider/provider.dart'; // Import provider
+import 'favorites_provider.dart'; // Import the FavoritesProvider
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -60,247 +63,250 @@ class HomePage extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Container(
-        width: screenSize.width,
-        height: screenSize.height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          gradient: const LinearGradient(
-            begin: Alignment(6.123234262925839e-17, 1),
-            end: Alignment(-1, 6.123234262925839e-17),
-            colors: orangeGradientColors,
-          ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            // Logo and Title Section
-            Positioned(
-              top: 41,
-              left: 28,
-              child: Image.asset(
-                'assets/ragachikitsalogo.png',
-                semanticLabel: 'ragachikitsalogo',
-                width: 69,
-                height: 40,
+      body: Stack(
+        children: [
+          Container(
+            width: screenSize.width,
+            height: screenSize.height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              gradient: const LinearGradient(
+                begin: Alignment(6.123234262925839e-17, 1),
+                end: Alignment(-1, 6.123234262925839e-17),
+                colors: orangeGradientColors,
               ),
             ),
-            Positioned(
-              top: 41,
-              left: 97,
-              child: const Text(
-                'Raaga Chikitsa',
-                textAlign: TextAlign.left,
-                style: textStyle36,
-              ),
-            ),
-            Positioned(
-              top: 91,
-              left: 80,
-              child: const Text(
-                ' Where music meets wellness!',
-                textAlign: TextAlign.left,
-                style: textStyle19,
-              ),
-            ),
-
-            // Main Content Area
-            Positioned(
-              top: 160,
-              left: 32,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Soothing Raaga of the Day', style: textStyle20),
-                  const SizedBox(height: 21),
-                  Container(
-                    width: 331,
-                    height: 216,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: brownColor, width: 2),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/Rectangle25.png'),
-                        fit: BoxFit.fill,
+            child: Column(
+              children: <Widget>[
+                // Logo and Title Section
+                Padding(
+                  padding: const EdgeInsets.only(top: 41, left: 22, right: 22),
+                  child: Row(
+                    children: [
+                      ClipOval(
+                        child: Image.asset(
+                          'assets/ragachikitsalogo.png',
+                          semanticLabel: 'ragachikitsalogo',
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 30),
-                      child: Stack(
-                        children: [
-                          Row(
+                      const SizedBox(width: 13),
+                      const Text(
+                        'Raaga Chikitsa',
+                        textAlign: TextAlign.left,
+                        style: textStyle36,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 68, right: 68),
+                  child: const Text(
+                    'Where music meets wellness!',
+                    textAlign: TextAlign.center,
+                    style: textStyle19,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Main Content Area
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Soothing Raaga of the Day', style: textStyle20),
+                      const SizedBox(height: 21),
+                      Container(
+                        width: double.infinity,
+                        height: 216,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: brownColor, width: 2),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/Rectangle25.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0, top: 30),
+                          child: Stack(
                             children: [
-                              Container(
-                                width: 35,
-                                height: 35,
-                                margin: const EdgeInsets.only(right: 9),
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/Image2.png'),
-                                    fit: BoxFit.fitWidth,
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 35,
+                                    height: 35,
+                                    margin: const EdgeInsets.only(right: 9),
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/Image2.png'),
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              const Text(
-                                'Gaanamurthi Raaga',
-                                style: textStyle20,
-                              ),
-                              const Spacer(),
-                              Container(
-                                width: 35,
-                                height: 35,
-                                margin: const EdgeInsets.only(right: 4),
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/Icons8play501.png'),
-                                    fit: BoxFit.fitWidth,
+                                  const Text(
+                                    'Gaanamurthi Raaga',
+                                    style: textStyle20,
                                   ),
+                                  const Spacer(),
+                                  Container(
+                                    width: 35,
+                                    height: 35,
+                                    margin: const EdgeInsets.only(right: 4),
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/Icons8play501.png'),
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                top: 65,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      width: 300,
+                                      child: Text(
+                                        '> Reduces stress and calms the mind.',
+                                        style: textStyle13,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 300,
+                                      child: Text(
+                                        '> Lowers heart rate and blood pressure.',
+                                        style: textStyle13,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 300,
+                                      child: Text(
+                                          '> Promotes deep breathing and lung health.',
+                                          style: textStyle13),
+                                    ),
+                                    const SizedBox(
+                                      width: 300,
+                                      child: Text(
+                                          '> Promotes emotional stability.',
+                                          style: textStyle13),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                          Positioned(
-                            top: 65,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  width: 300,
-                                  child: Text(
-                                    '> Reduces stress and calms the mind.',
-                                    style: textStyle13,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 300,
-                                  child: Text(
-                                    '> Lowers heart rate and blood pressure.',
-                                    style: textStyle13,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 300,
-                                  child: Text(
-                                      '> Promotes deep breathing and lung health.',
-                                      style: textStyle13),
-                                ),
-                                const SizedBox(
-                                  width: 300,
-                                  child: Text(
-                                      '> Promotes emotional stability.',
-                                      style: textStyle13),
-                                ),
-                              ],
-                            ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+
+                // Wellness Tools Section
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Column(
+                    children: [
+                      const Text('Wellness Tools', style: textStyle20),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildWellnessButton(
+                            text1: 'Search Raagas ',
+                            text2: 'by Time',
+                            textStyle: textStyle16,
+                            image: '',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SearchTimeScreen()),
+                              );
+                            },
+                          ),
+                          _buildWellnessButton(
+                            text1: 'Melody List',
+                            text2: '',
+                            textStyle: textStyle16,
+                            image: '',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const MelodyList()),
+                              );
+                            },
                           ),
                         ],
                       ),
-                    ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildWellnessButton(
+                            text1: 'Favorite Raaga ',
+                            text2: 'Playlist',
+                            textStyle: textStyle16,
+                            image: '',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const Favoriteplaylist()), // Navigate to Favoriteplaylist
+                              );
+                            },
+                          ),
+                          _buildWellnessButton(
+                            text1: 'Get Raaga for',
+                            text2: 'Relief',
+                            textStyle: textStyle16,
+                            image: '',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const RaagaRemediesScreen()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 40), // Add significant space before the bottom text
+                const Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Traditional wisdom associates raagas with ',
+                        textAlign: TextAlign.center,
+                        style: textStyle12,
+                      ),
+                      Text(
+                        'specific times for optimal benefits.',
+                        textAlign: TextAlign.center,
+                        style: textStyle12,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
+          ),
 
-            // Wellness Tools Section
-            Positioned(
-              top: 450,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  const Text('Wellness Tools', style: textStyle20),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildWellnessButton(
-                          text1: 'Search Raagas ',
-                          text2: 'by Time',
-                          textStyle: textStyle16,
-                          image: '',
-                        ),
-                        _buildWellnessButton(
-                          text1: 'Melody List',
-                          text2: '',
-                          textStyle: textStyle16,
-                          image: '',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const MelodyList()),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildWellnessButton(
-                          text1: 'Favorite Raaga ',
-                          text2: 'Playlist',
-                          textStyle: textStyle16,
-                          image: '',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Favoriteplaylist()), // Navigate to Favoriteplaylist
-                            );
-                          },
-                        ),
-                        _buildWellnessButton(
-                          text1: 'Get Raaga for',
-                          text2: 'Relief',
-                          textStyle: textStyle16,
-                          image: '',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const RaagaRemediesScreen()),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Bottom Navigation
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: _buildBottomNavigation(),
-            ),
-            Positioned(
-              top: 750,
-              left: 0,
-              right: 0,
-              child: const Text(
-                'Traditional wisdom associates raagas with ',
-                textAlign: TextAlign.center,
-                style: textStyle12,
-              ),
-            ),
-            Positioned(
-              top: 765,
-              left: 0,
-              right: 0,
-              child: const Text(
-                'specific times for optimal benefits.',
-                textAlign: TextAlign.center,
-                style: textStyle12,
-              ),
-            ),
-          ],
-        ),
+          // Bottom Navigation placed at the very bottom
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: _buildBottomNavigation(),
+          ),
+        ],
       ),
     );
   }
