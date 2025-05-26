@@ -17,18 +17,20 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
       recommendedRaagas.clear();
       if (selectedHour != null && selectedMinute != null) {
         // Basic time-based raaga recommendation logic (replace with your actual logic)
-        if ((selectedHour! >= 5 && selectedHour! < 8) || (selectedHour! == 8 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Hanumatodi', 'Gayakapriya']);
-        } else if ((selectedHour! >= 8 && selectedHour! < 11) || (selectedHour! == 11 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Kanakangi', 'Vanaspati']);
-        } else if ((selectedHour! >= 11 && selectedHour! < 14) || (selectedHour! == 14 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Manavati']);
-        } else if ((selectedHour! >= 14 && selectedHour! < 17) || (selectedHour! == 17 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Hanumatodi', 'Vanaspati', 'Manavati']);
-        } else if ((selectedHour! >= 17 && selectedHour! < 20) || (selectedHour! == 20 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Gayakapriya', 'Kanakangi']);
+        if ((selectedHour! >= 3 && selectedHour! < 6) || (selectedHour! == 6 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Kanakangi', 'Ratnangi', 'Ganamurti', 'Vanaspati', 'Manavati', 'Tanarupi']);
+        } else if ((selectedHour! >= 6 && selectedHour! < 9) || (selectedHour! == 9 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Senavati', 'Hanumatodi', 'Dhenuka', 'Natakapriya', 'Kokilapriya', 'Rupavati', 'Gayakapriya', 'Vakulabharanam', 'Mayamalavagowla', 'Chakravakam', 'Suryakantam', 'Hatakambari']);
+        } else if ((selectedHour! >= 9 && selectedHour! < 15) || (selectedHour! == 15 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Jhankaradhvani', 'Naṭabhairavi', 'Kiravani', 'Kharaharapriya', 'Gourimanohari', 'Varunapriya', 'Mararanjani', 'Charukesi', 'Sarasangi', 'Harikambhōji', 'Dhirasankarabharanam', 'Naganandini', 'Yagapriya', 'Ragavardhini', 'Gangeyabhusani', 'Vagadhisvari', 'Sulini', 'Chalanaṭa']);
+        } else if ((selectedHour! >= 15 && selectedHour! < 18) || (selectedHour! == 18 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Salagam', 'Jalarnavam', 'Jhalavarali', 'Navanitam', 'Pavani', 'Raghupriya', 'Gavambhodi', 'Bhavapriya', 'Subhapantuvarali', 'Shadvidamargini', 'Suvarnangi', 'Divyamani', 'Dhavalambari', 'Namanarayani', 'Kamavardhini', 'Ramapriya', 'Gamanasrama', 'Visvambari']);
+        } else if ((selectedHour! >= 18 && selectedHour! < 21) || (selectedHour! == 21 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Samalangi', 'Sanmukhapriya', 'Simhendramadhyamam', 'Hemavati']);
+        } else if ((selectedHour! >= 21 && selectedHour! < 23) || (selectedHour! == 23 && selectedMinute! <= 30)) {
+          recommendedRaagas.addAll(['Dharmavati', 'Nitimati', 'Kantamani', 'Risabhapriya', 'Latangi', 'Vachaspati', 'Mechakalyani', 'Chitrambari']);
         } else {
-          recommendedRaagas.addAll(['Kanakangi', 'Hanumatodi', 'Gayakapriya', 'Vanaspati']);
+          recommendedRaagas.addAll(['Sucharitra', 'Jyoti svarupini', 'Dhathuvardhani', 'Nasikabhusani', 'Kōsalam', 'Rasikapriya']);
         }
       } else {
         recommendedRaagas.add('Please select a valid time.');
