@@ -5,7 +5,10 @@ import 'raagarelief.dart';
 import 'searchtime.dart';
 import 'package:provider/provider.dart';
 import 'favorites_provider.dart';
-import 'package:audioplayers/audioplayers.dart'; // Import the audioplayers package
+import 'package:audioplayers/audioplayers.dart';
+import 'settings.dart';
+import 'about.dart';
+import 'profile.dart';// Import the SettingsPage
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -199,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: AssetImage(isPlaying
-                                              ? 'assets/Icons8stop50.png' // You might want a stop icon
+                                              ? 'assets/Icons8stop50.png'
                                               : 'assets/Icons8play501.png'),
                                           fit: BoxFit.fitWidth,
                                         ),
@@ -213,6 +216,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    const SizedBox(height: 8),
                                     SizedBox(
                                       width: 300,
                                       child: Text(
@@ -220,6 +224,7 @@ class _HomePageState extends State<HomePage> {
                                         style: textStyle13,
                                       ),
                                     ),
+                                    const SizedBox(height: 8),
                                     SizedBox(
                                       width: 300,
                                       child: Text(
@@ -227,6 +232,7 @@ class _HomePageState extends State<HomePage> {
                                         style: textStyle13,
                                       ),
                                     ),
+                                    const SizedBox(height: 8),
                                     SizedBox(
                                       width: 300,
                                       child: Text(
@@ -234,6 +240,7 @@ class _HomePageState extends State<HomePage> {
                                         style: textStyle13,
                                       ),
                                     ),
+                                    const SizedBox(height: 8),
                                     SizedBox(
                                       width: 300,
                                       child: Text(
@@ -426,16 +433,34 @@ class _HomePageState extends State<HomePage> {
             icon: 'assets/Icons8about241.png',
             label: 'About',
             textStyle: textStyle12,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutScreen()),
+              );
+            },
           ),
           _buildNavigationItem(
             icon: 'assets/Icons8settings5011.png',
             label: 'Settings',
             textStyle: textStyle12,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
+            },
           ),
           _buildNavigationItem(
             icon: 'assets/Icons8usericon241.png',
             label: 'Profile',
             textStyle: textStyle12,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
+            },
           ),
         ],
       ),
@@ -444,22 +469,25 @@ class _HomePageState extends State<HomePage> {
 
   // Helper method for building a navigation item
   Widget _buildNavigationItem(
-      {required String icon, required String label, required TextStyle textStyle}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(icon),
-              fit: BoxFit.fitWidth,
+      {required String icon, required String label, required TextStyle textStyle, VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap, // Use the onTap callback here
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(icon),
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
-        ),
-        Text(label, style: textStyle),
-      ],
+          Text(label, style: textStyle),
+        ],
+      ),
     );
   }
 }
