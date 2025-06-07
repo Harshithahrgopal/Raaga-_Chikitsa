@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> playRaaga() async {
     try {
-      await audioPlayer.play(AssetSource('audio/M4/M4(4).wav'));
+      await audioPlayer.play(AssetSource('audio/M3/M3(4).wav'));
       setState(() {
         isPlaying = true;
       });
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       width: 35,
                                       height: 35,
-                                      margin: const EdgeInsets.only(right: 4),
+                                      margin: const EdgeInsets.only(right: 20),
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: AssetImage(isPlaying
