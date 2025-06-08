@@ -5,12 +5,12 @@ import 'ganamurti.dart';
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(212, 141, 102, 1);
-const raagaDivColor = Color.fromRGBO(212, 141, 102, 0.7); // D48D66 in RGB
+const raagaDivColor = Color.fromRGBO(212, 141, 102, 0.7);
 const arrowBrown = Color.fromRGBO(105, 23, 5, 1);
 const borderRadiusAll = BorderRadius.all(Radius.circular(15));
 final BorderRadius itemRadius = BorderRadius.circular(12);
 const itemHeight = 44.0;
-const dividerHeight = 9.5; // Increased divider height for more space
+const dividerHeight = 9.5;
 
 const titleStyle = TextStyle(
   color: brown,
@@ -67,19 +67,16 @@ class MelodyList extends StatelessWidget {
         decoration: const BoxDecoration(
           borderRadius: borderRadiusAll,
           gradient: LinearGradient(
-            begin: Alignment(0, 1), // Changed begin alignment
-            end: Alignment(0, 0),   // Changed end alignment
+            begin: Alignment(0, 1),
+            end: Alignment(0, 0),
             colors: [Color(0xFFFFbc97), Color(0xFFFFf1db)],
           ),
         ),
-        child: Stack(
-          children: <Widget>[
-            // Top Bar
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Top Bar
+              Container(
                 height: 72,
                 color: lightBrown.withOpacity(0.95),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -113,26 +110,25 @@ class MelodyList extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            // Melody Items
-            Positioned(
-              top: 85,
-              left: 20,
-              right: 20,
-              child: SingleChildScrollView( // Enables scrolling
-                child: Column(
-                  children: _melaKarthaRaagas.map((raagaName) {
-                    return Column(
-                      children: [
-                        _buildMelodyItem(context, raagaName),
-                        SizedBox(height: dividerHeight),
-                      ],
-                    );
-                  }).toList(),
+
+              // Scrollable Melody Items
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    children: _melaKarthaRaagas.map((raagaName) {
+                      return Column(
+                        children: [
+                          _buildMelodyItem(context, raagaName),
+                          const SizedBox(height: dividerHeight),
+                        ],
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -152,7 +148,7 @@ class MelodyList extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const GanamurthiScreen()),
           );
         }
-        // Add navigation cases for other raagas as needed
+        // Add more if-else blocks for other raagas if needed.
       },
       child: Container(
         width: double.infinity,
