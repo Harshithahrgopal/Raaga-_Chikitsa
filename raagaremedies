@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'vanaspati.dart'; // Add correct import path
+import 'ganamurti.dart'; // Add correct import path
 
 const brown = Color.fromRGBO(92, 2, 2, 1);
 const lightBrown = Color.fromRGBO(105, 23, 5, 1);
 const darkBorderColor = Color(0xFFD48D66);
-const veryLightBrownContainerColor = Color(0xFFF5E0C3); // A very light shade of brown
+const veryLightBrownContainerColor = Color(0xFFF5E0C3);
 
 class RaagaRemediesScreen extends StatefulWidget {
   const RaagaRemediesScreen({super.key});
@@ -16,6 +18,7 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
   String? _selectedProblem;
   List<String> _currentRaagas = [];
   bool _showRaagaContainer = false;
+
   final List<String> _problems = [
     'Sleep & Relaxation Disorders',
     'Stress & Anxiety',
@@ -28,65 +31,21 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
     'Anger & Irritability',
     'Headache & Migraine',
     'Depression & Mood Swings',
-    // Add more problems here
   ];
 
   final Map<String, List<String>> _raagaRemedies = {
-    'Sleep & Relaxation Disorders': ['Ganamurti', 'Vanaspati', 'Natabhairavi', 'Pavani'],
+    'Sleep & Relaxation Disorders': ['Ganamurti', 'Naganandini', 'Natabhairavi', 'Pavani'],
     'Stress & Anxiety': ['Tanaroopi', 'Senavati', 'Mayamalavagowla', 'Vachaspathi'],
     'Hypertension & High Blood Pressure': ['Keeravani', 'Chalanata', 'Ragavardhini', 'Hemavati'],
-    'Respiratory Issues (Asthma, Breathing Difficulties)': [
-      'Ratnangi',
-      'Charukesi',
-      'Jhalavarali',
-      'Dhavalambari'
-    ],
+    'Respiratory Issues (Asthma, Breathing Difficulties)': ['Ratnangi', 'Charukesi', 'Jhalavarali', 'Dhavalambari'],
     'Fatigue & Lack of Energy': ['Manavati', 'Chayavati', 'Vagadhishvari', 'Bhavapriya'],
     'Digestive Disorders': ['Natakapriya', 'Chakravakam', 'Mararanjani', 'Raganarayani'],
-    'Meditation & Mental Clarity': ['Rupavati', 'Naganandini', 'Dhunibinnashadjam', 'Rasikapriya'],
+    'Meditation & Mental Clarity': ['Rupavati', 'Vanaspati', 'Dhunibinnashadjam', 'Rasikapriya'],
     'Heart & Emotional Healing': ['Gayakapriya', 'Kharaharapriya', 'Namanarayani', 'Latangi'],
     'Anger & Irritability': ['Hanumatodi', 'Vakulabharanam', 'Yagapriya', 'Shamalangi'],
     'Headache & Migraine': ['Kokilapriya', 'Varunapriya', 'Shadvidamargini', 'Simhendramadhyamam'],
     'Depression & Mood Swings': ['Kanakangi', 'Jhankaradhvani', 'Dheerasankarabharanam', 'Gavambodhi'],
-    // Add more mappings for other problems
   };
-
-  Widget _buildRaagaItem(String name) {
-    return Container(
-      width: 340,
-      height: 48,
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: darkBorderColor.withOpacity(0.4), // Dark brown with less opacity
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Text(
-              name,
-              style: const TextStyle(
-                color: brown, // Dark brown text
-                fontFamily: 'Inter',
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
-          const Text(
-            '>',
-            style: TextStyle(
-              color: brown,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   void _getRaagasForProblem() {
     if (_selectedProblem == null) {
@@ -108,9 +67,60 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
       _showRaagaContainer = _currentRaagas.isNotEmpty;
       if (_currentRaagas.isEmpty && _selectedProblem != null) {
         _currentRaagas = ['No specific raagas found.'];
-        _showRaagaContainer = true; // Still show the container with the "no raagas" message
+        _showRaagaContainer = true;
       }
     });
+  }
+
+  void _handleRaagaClick(String raaga) {
+    if (raaga == 'Vanaspati') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => VanaspatiScreen()));
+    } else if (raaga == 'Ganamurti') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => GanamurthiScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Screen not available for "$raaga"')),
+      );
+    }
+  }
+
+  Widget _buildRaagaItem(String name) {
+    return GestureDetector(
+      onTap: () => _handleRaagaClick(name),
+      child: Container(
+        width: 340,
+        height: 48,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          color: darkBorderColor.withOpacity(0.4),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                name,
+                style: const TextStyle(
+                  color: brown,
+                  fontFamily: 'Inter',
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            const Text(
+              '>',
+              style: TextStyle(
+                color: brown,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -160,10 +170,9 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                         color: brown,
                         fontFamily: 'Inter',
                         fontSize: screenWidth * 0.055,
-                        fontWeight: FontWeight.normal,
                       ),
                     ),
-                    ClipOval( // Make the logo round
+                    ClipOval(
                       child: Image.asset(
                         'assets/ragachikitsalogo.png',
                         width: screenWidth * 0.1,
@@ -184,7 +193,6 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                   color: brown,
                   fontFamily: 'Inter',
                   fontSize: screenWidth * 0.068,
-                  fontWeight: FontWeight.normal,
                 ),
               ),
             ),
@@ -217,10 +225,7 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                         items: _problems.map((problem) {
                           return DropdownMenuItem<String>(
                             value: problem,
-                            child: Text(
-                              problem,
-                              style: const TextStyle(fontSize: 12),
-                            ),
+                            child: Text(problem, style: const TextStyle(fontSize: 12)),
                           );
                         }).toList(),
                         onChanged: (String? newValue) {
@@ -257,7 +262,6 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                     color: brown,
                     fontFamily: 'Inter',
                     fontSize: screenWidth * 0.045,
-                    fontWeight: FontWeight.normal,
                   ),
                 ),
               ),
@@ -289,7 +293,6 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                                 color: brown,
                                 fontFamily: 'Inter',
                                 fontSize: screenWidth * 0.065,
-                                fontWeight: FontWeight.normal,
                               ),
                             ),
                           ],
@@ -318,7 +321,6 @@ class _RaagaRemediesScreenState extends State<RaagaRemediesScreen> {
                   color: lightBrown,
                   fontFamily: 'Inter',
                   fontSize: screenWidth * 0.03,
-                  fontWeight: FontWeight.normal,
                 ),
               ),
             ),
