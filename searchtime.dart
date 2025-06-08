@@ -20,9 +20,9 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
       if (selectedHour != null && selectedMinute != null) {
         // Basic time-based raaga recommendation logic (replace with your actual logic)
         if ((selectedHour! >= 3 && selectedHour! < 6) || (selectedHour! == 6 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Kanakangi', 'Ratnangi', 'Ganamurti', 'Vanaspati', 'Manavati', 'Tanarupi']);
+          recommendedRaagas.addAll(['Kanakangi', 'Ratnangi', 'Dhenuka', 'Vanaspati', 'Manavati', 'Tanarupi']);
         } else if ((selectedHour! >= 6 && selectedHour! < 9) || (selectedHour! == 9 && selectedMinute! <= 30)) {
-          recommendedRaagas.addAll(['Senavati', 'Hanumatodi', 'Dhenuka', 'Natakapriya', 'Kokilapriya', 'Rupavati', 'Gayakapriya', 'Vakulabharanam', 'Mayamalavagowla', 'Chakravakam', 'Suryakantam', 'Hatakambari']);
+          recommendedRaagas.addAll(['Senavati', 'Hanumatodi', 'Ganamurti', 'Natakapriya', 'Kokilapriya', 'Rupavati', 'Gayakapriya', 'Vakulabharanam', 'Mayamalavagowla', 'Chakravakam', 'Suryakantam', 'Hatakambari']);
         } else if ((selectedHour! >= 9 && selectedHour! < 15) || (selectedHour! == 15 && selectedMinute! <= 30)) {
           recommendedRaagas.addAll(['Jhankaradhvani', 'Naṭabhairavi', 'Kiravani', 'Kharaharapriya', 'Gourimanohari', 'Varunapriya', 'Mararanjani', 'Charukesi', 'Sarasangi', 'Harikambhōji', 'Dhirasankarabharanam', 'Naganandini', 'Yagapriya', 'Ragavardhini', 'Gangeyabhusani', 'Vagadhisvari', 'Sulini', 'Chalanaṭa']);
         } else if ((selectedHour! >= 15 && selectedHour! < 18) || (selectedHour! == 18 && selectedMinute! <= 30)) {
