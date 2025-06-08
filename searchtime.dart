@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'vanaspati.dart';
+import 'ganamurti.dart';
 
 class SearchTimeScreen extends StatefulWidget {
   const SearchTimeScreen({super.key});
@@ -39,10 +41,19 @@ class _SearchTimeScreenState extends State<SearchTimeScreen> {
   }
 
   void _handleRaagaClick(String raaga) {
-    // Implement what happens when a raaga is clicked
-    print('Raaga "$raaga" clicked!');
-    // You might want to navigate to a details screen or play the raaga here.
+    if (raaga == 'Vanaspati') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => VanaspatiScreen()));
+    } else if (raaga == 'Ganamurti') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => GanamurthiScreen()));
+    }
+    // Add more conditions as needed
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Screen not available for "$raaga"')),
+      );
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
