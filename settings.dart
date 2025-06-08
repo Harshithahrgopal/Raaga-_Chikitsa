@@ -32,11 +32,11 @@ class _SettingsPageState extends State<SettingsPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Settings",
           style: TextStyle(
-            color: Color(0xFF5C0202),
-            fontSize: 22,
+            color: const Color(0xFF5C0202),
+            fontSize: fontSize + 6,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -66,9 +66,10 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            const Text("Appearance", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("Appearance",
+                style: TextStyle(fontSize: fontSize + 2, fontWeight: FontWeight.bold)),
             SwitchListTile(
-              title: const Text("Dark Mode"),
+              title: Text("Dark Mode", style: TextStyle(fontSize: fontSize)),
               value: isDarkMode,
               onChanged: (val) {
                 setState(() {
@@ -77,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             ListTile(
-              title: const Text("Font Size"),
+              title: Text("Font Size", style: TextStyle(fontSize: fontSize)),
               subtitle: Slider(
                 value: fontSize,
                 min: 12,
@@ -92,9 +93,10 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             const Divider(),
-            const Text("Playback", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("Playback",
+                style: TextStyle(fontSize: fontSize + 2, fontWeight: FontWeight.bold)),
             SwitchListTile(
-              title: const Text("Sleep Timer"),
+              title: Text("Sleep Timer", style: TextStyle(fontSize: fontSize)),
               value: sleepTimerEnabled,
               onChanged: (val) {
                 setState(() {
@@ -103,11 +105,13 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             ListTile(
-              title: const Text("Playback Speed"),
+              title: Text("Playback Speed", style: TextStyle(fontSize: fontSize)),
               trailing: DropdownButton<double>(
                 value: playbackSpeed,
                 items: [1.0, 1.25, 1.5].map((speed) {
-                  return DropdownMenuItem(value: speed, child: Text("${speed}x"));
+                  return DropdownMenuItem(
+                      value: speed,
+                      child: Text("${speed}x", style: TextStyle(fontSize: fontSize)));
                 }).toList(),
                 onChanged: (val) {
                   if (val != null) {
@@ -119,9 +123,10 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             const Divider(),
-            const Text("Preferences", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("Preferences",
+                style: TextStyle(fontSize: fontSize + 2, fontWeight: FontWeight.bold)),
             SwitchListTile(
-              title: const Text("Daily Raaga Reminder"),
+              title: Text("Daily Raaga Reminder", style: TextStyle(fontSize: fontSize)),
               value: notificationsEnabled,
               onChanged: (val) {
                 setState(() {
@@ -130,11 +135,12 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             ListTile(
-              title: const Text("Language"),
+              title: Text("Language", style: TextStyle(fontSize: fontSize)),
               trailing: DropdownButton<String>(
                 value: selectedLanguage,
                 items: ['English', 'Kannada', 'Hindi'].map((lang) {
-                  return DropdownMenuItem(value: lang, child: Text(lang));
+                  return DropdownMenuItem(
+                      value: lang, child: Text(lang, style: TextStyle(fontSize: fontSize)));
                 }).toList(),
                 onChanged: (val) {
                   if (val != null) {
@@ -146,14 +152,17 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             const Divider(),
-            const Text("Support", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("Support",
+                style: TextStyle(fontSize: fontSize + 2, fontWeight: FontWeight.bold)),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: TextField(
                 controller: _feedbackController,
                 maxLines: 5,
+                style: TextStyle(fontSize: fontSize),
                 decoration: InputDecoration(
                   hintText: "Write your feedback here...",
+                  hintStyle: TextStyle(fontSize: fontSize),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14.0),
                   ),
@@ -163,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             SizedBox(
-              width: 70, // Adjust this value to control the button's width
+              width: 70,
               child: ElevatedButton(
                 onPressed: () {
                   String feedback = _feedbackController.text;
@@ -180,14 +189,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: const Text("Submit Feedback"),
+                child: Text("Submit Feedback", style: TextStyle(fontSize: fontSize)),
               ),
             ),
             ListTile(
-              title: const Text("Privacy Policy"),
-              onTap: () {
-                // Navigate to policy page
-              },
+              title: Text("Privacy Policy", style: TextStyle(fontSize: fontSize)),
+              onTap: () {},
             ),
           ],
         ),
